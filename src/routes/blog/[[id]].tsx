@@ -1,3 +1,4 @@
+import { useNavigate, useParams } from "@solidjs/router";
 import {
   createSignal,
   createContext,
@@ -9,6 +10,7 @@ import {
   createEffect,
   Show,
   createRenderEffect,
+  createUniqueId,
 } from "solid-js";
 import { createStore, SetStoreFunction, Store } from "solid-js/store";
 import { tagger, Tagged, GetTags } from "~/utils/tag";
@@ -147,15 +149,21 @@ const fetchPost = async (
 };
 
 export default function Blog() {
-  const [postsFetched] = createResource(async () => await fetchPosts(null), {
-    initialValue: [],
-  });
   const selectedPostSignal = createSignal<PostId | null>(null);
   const postsStore = createStore<PostStore>({ posts: new Map([]) });
 
+  const navigate = useNavigate();
+  const params = useParams();
   createRenderEffect(async () => {
-    postsStore[1]({ posts: new Map(postsFetched()) });
-    selectedPostSignal[1](postsFetched().at(0)?.[0] ?? null);
+    const fetched = await fetchPosts(null);
+    if (fetched.length > 0) {
+      postsStore[1]({ posts: new Map(fetched) });
+    }
+
+    if (params.id?.length === 0 || params.id == undefined) {
+      selectedPostSignal[1](fetched.at(0)?.[0] ?? null);
+      navigate(`${fetched[0][0]}`, { replace: true });
+    }
   });
 
   return (
