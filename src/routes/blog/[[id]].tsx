@@ -73,21 +73,22 @@ function SideBar() {
 }
 
 function Content() {
+  const params = useParams();
   const selectedPostSignal = useContext(SelectedPostCtx);
   const postsStore = useContext(PostsCtx);
 
-  const selectedPostId = createMemo(() => selectedPostSignal[0]());
+  const selectedPostId = createMemo(
+    () => selectedPostSignal[0]() ?? postId(params.id),
+  );
   const setPosts = createMemo(() => postsStore[1]);
   const posts = createMemo(() => postsStore[0]);
 
-  const [postsFetched] = createResource(selectedPostId, fetchPosts);
-
-  createEffect(() => {
-    const result = postsFetched();
-    if (result) {
-      setPosts()((posts) => {
+  createEffect(async () => {
+    if (!posts().posts.has(selectedPostId())) {
+      const result = await fetchPost(selectedPostId());
+      setPosts()(({ posts }) => {
         return {
-          posts: new Map(Array.from(posts.posts.entries()).concat(result)),
+          posts: new Map(Array.from(posts.entries()).concat(result)),
         };
       });
     }
@@ -95,7 +96,8 @@ function Content() {
 
   const selectedPost = createMemo(() => {
     const postId = selectedPostId();
-    return postId != null ? (posts().posts.get(postId) ?? null) : null;
+    const storedPosts = posts().posts;
+    return postId != null ? (storedPosts.get(postId) ?? null) : null;
   });
 
   return (
@@ -115,20 +117,32 @@ function Content() {
 const fetchPosts = async (
   selectedPostId: PostId | null,
 ): Promise<Array<[PostId, Post]>> => {
-  if (selectedPostId) {
-    const post = {
-      id: postId("Another one"),
-      title: "Title Lorem Ipsum",
-      content: "Lorem ipsum",
-    } satisfies Post;
-    return [[post.id, post]];
-  }
-  const post = {
+  const post_one = {
     id: postId("None"),
     title: "No title",
     content: "Nothing yet",
   };
 
+  const post_two = {
+    id: postId("anotherone"),
+    title: "Title Lorem Ipsum",
+    content: "Lorem ipsum",
+  } satisfies Post;
+
+  return [
+    [post_one.id, post_one],
+    [post_two.id, post_two],
+  ];
+};
+
+const fetchPost = async (
+  selectedPostId: PostId,
+): Promise<Array<[PostId, Post]>> => {
+  const post = {
+    id: postId("anotherone"),
+    title: "Title Lorem Ipsum",
+    content: "Lorem ipsum",
+  } satisfies Post;
   return [[post.id, post]];
 };
 
