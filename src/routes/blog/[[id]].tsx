@@ -9,7 +9,8 @@ import {
   createEffect,
   Show,
   createRenderEffect,
-  createUniqueId,
+  createResource,
+  Suspense,
 } from "solid-js";
 import { createStore, SetStoreFunction, Store } from "solid-js/store";
 import { tagger, Tagged, GetTags } from "~/utils/tag";
@@ -41,10 +42,15 @@ function PostMiniature(props: { post: Post; selected: boolean }) {
   const selectedColor = createMemo(() =>
     props.selected ? "border-sky-700 border-2" : "",
   );
+
+  const navigate = useNavigate();
   return (
     <button
       class={`text-gray-700 px-2 py-1 rounded bg-slate-200 ${selectedColor()}`}
-      onClick={() => selectPostSignal[1](post().id)}
+      onClick={() => {
+        selectPostSignal[1](post().id);
+        navigate(`/blog/${post().id}`);
+      }}
     >
       {post().title}
     </button>
@@ -84,21 +90,26 @@ function Content() {
   const setPosts = createMemo(() => postsStore[1]);
   const posts = createMemo(() => postsStore[0]);
 
+  const [selectedPost] = createResource(selectedPostId, async (source) => {
+    if (!posts().posts.has(source)) {
+      const result = await fetchPost(source);
+
+      return result[0][1];
+    }
+
+    return posts().posts.get(source) ?? null;
+  });
+
   createEffect(async () => {
-    if (!posts().posts.has(selectedPostId())) {
-      const result = await fetchPost(selectedPostId());
-      setPosts()(({ posts }) => {
+    const post = selectedPost();
+    if (post != null && !posts().posts.has(post.id)) {
+      setPosts()((posts) => {
+        const postsEntries = Array.from(posts.posts.entries());
         return {
-          posts: new Map(Array.from(posts.entries()).concat(result)),
+          posts: new Map(postsEntries.concat([[post.id, post]])),
         };
       });
     }
-  });
-
-  const selectedPost = createMemo(() => {
-    const postId = selectedPostId();
-    const storedPosts = posts().posts;
-    return postId != null ? (storedPosts.get(postId) ?? null) : null;
   });
 
   return (
@@ -115,36 +126,35 @@ function Content() {
   );
 }
 
-const fetchPosts = async (
-  _selectedPostId: PostId | null,
-): Promise<Array<[PostId, Post]>> => {
-  const post_one = {
-    id: postId("None"),
-    title: "No title",
-    content: "Nothing yet",
-  };
+const fetchAllPosts = async (): Promise<Array<[PostId, Post]>> => {
+  const fetched = await fetch(`http://localhost:5173/api/posts/all`, {
+    method: "GET",
+  });
 
-  const post_two = {
-    id: postId("anotherone"),
-    title: "Title Lorem Ipsum",
-    content: "Lorem ipsum",
-  } satisfies Post;
+  const result: Array<Post> = await fetched.json();
 
-  return [
-    [post_one.id, post_one],
-    [post_two.id, post_two],
-  ];
+  if (result instanceof Array) {
+    return result.map((post) => [post.id, post] as const);
+  }
+  throw "todo";
 };
 
 const fetchPost = async (
-  _selectedPostId: PostId,
+  selectedPostId: PostId,
 ): Promise<Array<[PostId, Post]>> => {
-  const post = {
-    id: postId("anotherone"),
-    title: "Title Lorem Ipsum",
-    content: "Lorem ipsum",
-  } satisfies Post;
-  return [[post.id, post]];
+  const fetched = await fetch(
+    `http://localhost:5173/api/posts/${selectedPostId}`,
+    {
+      method: "GET",
+    },
+  );
+
+  const result: Array<Post> = await fetched.json();
+
+  if (result instanceof Array) {
+    return result.map((post) => [post.id, post] as const);
+  }
+  throw "todo";
 };
 
 export default function Blog() {
@@ -153,13 +163,21 @@ export default function Blog() {
 
   const navigate = useNavigate();
   const params = useParams();
-  createRenderEffect(async () => {
-    const fetched = await fetchPosts(null);
-    if (fetched.length > 0) {
-      postsStore[1]({ posts: new Map(fetched) });
+
+  const [allFetchedPosts] = createResource(async () => await fetchAllPosts(), {
+    initialValue: [],
+  });
+
+  createEffect(async () => {
+    if (allFetchedPosts.state != "ready") {
+      return;
     }
 
-    if (params.id?.length === 0 || params.id == undefined) {
+    const fetched = allFetchedPosts();
+    if (fetched.length === 0) return;
+
+    postsStore[1]({ posts: new Map(fetched) });
+    if (params.id?.length === 0 || params.id == null) {
       selectedPostSignal[1](fetched.at(0)?.[0] ?? null);
       navigate(`${fetched[0][0]}`, { replace: true });
     }
@@ -168,10 +186,12 @@ export default function Blog() {
   return (
     <PostsCtx.Provider value={postsStore}>
       <SelectedPostCtx.Provider value={selectedPostSignal}>
-        <div class="flex">
-          <SideBar />
-          <Content />
-        </div>
+        <Suspense fallback={<div>Loading</div>}>
+          <div class="flex">
+            <SideBar />
+            <Content />
+          </div>
+        </Suspense>
       </SelectedPostCtx.Provider>
     </PostsCtx.Provider>
   );
