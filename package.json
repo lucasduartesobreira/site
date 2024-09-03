@@ -3,7 +3,7 @@
   "type": "module",
   "scripts": {
     "dev": "vinxi dev --port 5173",
-    "db": "source ./.env && turso dev --db-file=$DATABASE_PATH --auth-jwt-key-file=$AUTH_JWT_KEY_FILE_PATH",
+    "db": "source ./.env && turso dev --db-file=$DATABASE_PATH",
     "build": "vinxi build",
     "start": "vinxi start"
   },
