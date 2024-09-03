@@ -81,13 +81,14 @@ function Content() {
   const posts = createMemo(() => postsStore[0]);
 
   const [selectedPost] = createResource(selectedPostId, async (source) => {
-    if (!posts().posts.has(source)) {
+    const post = posts().posts.get(source);
+    if (post == null || post.content == null) {
       const result = await fetchPost(source);
 
       return result[0][1];
     }
 
-    return posts().posts.get(source) ?? null;
+    return post;
   });
 
   createEffect(async () => {
