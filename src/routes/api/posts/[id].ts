@@ -18,6 +18,10 @@ const fetchPost = async (
 };
 
 export async function GET(event: APIEvent) {
-  const id = postId(Number(event.params.id));
+  const idParams = event.params.id;
+  if (idParams === "") {
+    return [];
+  }
+  const id = postId(Number.parseInt(idParams));
   return fetchPost(id);
 }
