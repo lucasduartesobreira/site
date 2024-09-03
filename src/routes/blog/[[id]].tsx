@@ -74,8 +74,10 @@ function Content() {
   const selectedPostSignal = useContext(SelectedPostCtx);
   const postsStore = useContext(PostsCtx);
 
-  const selectedPostId = createMemo(
-    () => selectedPostSignal[0]() ?? postId(Number(params.id)),
+  const selectedPostId = createMemo(() =>
+    (selectedPostSignal[0]() ?? (params.id !== "" && params.id != null))
+      ? postId(Number(params.id))
+      : null,
   );
   const setPosts = createMemo(() => postsStore[1]);
   const posts = createMemo(() => postsStore[0]);
