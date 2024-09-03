@@ -176,6 +176,13 @@ export default function Blog() {
     }
   });
 
+  createEffect(async () => {
+    const selected = selectedPostSignal[0]();
+    if (selected == null && params.id != null && params.id != "") {
+      selectedPostSignal[1](postId(Number.parseInt(params.id)));
+    }
+  });
+
   return (
     <PostsCtx.Provider value={postsStore}>
       <SelectedPostCtx.Provider value={selectedPostSignal}>
