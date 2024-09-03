@@ -12,10 +12,7 @@ import {
   Suspense,
 } from "solid-js";
 import { createStore, SetStoreFunction, Store } from "solid-js/store";
-import { tagger, Tagged, GetTags } from "~/utils/tag";
-
-const postId = tagger("PostId");
-type PostId = Tagged<string, GetTags<typeof postId>>;
+import { Post, PostContent, postId, PostId } from "~/lib/postTypes";
 
 type SelectedPost = PostId | null;
 
@@ -23,13 +20,7 @@ const SelectedPostCtx = createContext<Signal<SelectedPost>>(
   createSignal<SelectedPost>(null),
 );
 
-type Post = {
-  id: PostId;
-  title: string;
-  content: string;
-};
-
-type PostStore = { posts: Map<PostId, Post> };
+type PostStore = { posts: Map<PostId, Post & Partial<PostContent>> };
 
 const PostsCtx = createContext<[Store<PostStore>, SetStoreFunction<PostStore>]>(
   [{ posts: new Map<PostId, Post>([]) }, () => {}],
@@ -84,7 +75,7 @@ function Content() {
   const postsStore = useContext(PostsCtx);
 
   const selectedPostId = createMemo(
-    () => selectedPostSignal[0]() ?? postId(params.id),
+    () => selectedPostSignal[0]() ?? postId(Number(params.id)),
   );
   const setPosts = createMemo(() => postsStore[1]);
   const posts = createMemo(() => postsStore[0]);
@@ -140,7 +131,7 @@ const fetchAllPosts = async (): Promise<Array<[PostId, Post]>> => {
 
 const fetchPost = async (
   selectedPostId: PostId,
-): Promise<Array<[PostId, Post]>> => {
+): Promise<Array<[PostId, Post & PostContent]>> => {
   const fetched = await fetch(
     `http://localhost:5173/api/posts/${selectedPostId}`,
     {
@@ -148,7 +139,7 @@ const fetchPost = async (
     },
   );
 
-  const result: Array<Post> = await fetched.json();
+  const result: Array<Post & PostContent> = await fetched.json();
 
   if (result instanceof Array) {
     return result.map((post) => [post.id, post] as const);
