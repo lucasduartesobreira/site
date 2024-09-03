@@ -19,7 +19,9 @@ const fetchPost = async (
 
 export async function GET(event: APIEvent) {
   const idParams = event.params.id;
-  if (idParams === "") {
+  const numberIdParams = Number(idParams);
+
+  if (!Number.isSafeInteger(numberIdParams)) {
     return [];
   }
   const id = postId(Number.parseInt(idParams));
