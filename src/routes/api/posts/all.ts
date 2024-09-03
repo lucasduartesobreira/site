@@ -1,28 +1,19 @@
-import { GetTags, Tagged, tagger } from "~/utils/tag";
+import { createClient } from "@libsql/client";
+import { Post } from "~/lib/postTypes";
 
-const postId = tagger("PostId");
-type PostId = Tagged<string, GetTags<typeof postId>>;
-
-type Post = {
-  id: PostId;
-  title: string;
-  content: string;
-};
+const client = createClient({
+  url: process.env.DATABASE_URL ?? "file://data/local.db",
+  authToken: process.env.AUTH_JWT_KEY,
+});
 
 const fetchPosts = async (): Promise<Array<Post>> => {
-  const post_one = {
-    id: postId("None"),
-    title: "No title",
-    content: "Nothing yet",
-  };
+  const posts = await client.execute("SELECT * FROM posts LIMIT 200 ");
+  const rows = (posts.rows as unknown as Post[]).map((post) => ({
+    ...post,
+    content: post.summary,
+  }));
 
-  const post_two = {
-    id: postId("anotherone"),
-    title: "Title Lorem Ipsum",
-    content: "Lorem ipsum",
-  } satisfies Post;
-
-  return [post_one, post_two] as const;
+  return rows;
 };
 
 export async function GET() {
