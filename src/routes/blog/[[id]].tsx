@@ -87,7 +87,7 @@ function Content() {
     if (post == null || post.content == null) {
       const result = await fetchPost(source);
 
-      return result[0][1];
+      return result.at(0)?.[1];
     }
 
     return post;
@@ -95,11 +95,17 @@ function Content() {
 
   createEffect(async () => {
     const post = selectedPost();
-    if (post != null && !posts().posts.has(post.id)) {
+    if (post == null || post.content == null) return;
+    const postFound = posts().posts.get(post.id);
+
+    if (
+      postFound != null &&
+      (post.version !== postFound.version || post.content !== postFound.content)
+    ) {
       setPosts()((posts) => {
-        const postsEntries = Array.from(posts.posts.entries());
+        const postsEntries = posts.posts.set(post.id, post);
         return {
-          posts: new Map(postsEntries.concat([[post.id, post]])),
+          posts: postsEntries,
         };
       });
     }
@@ -135,6 +141,8 @@ const fetchAllPosts = async (): Promise<Array<[PostId, Post]>> => {
 const fetchPost = async (
   selectedPostId: PostId,
 ): Promise<Array<[PostId, Post & PostContent]>> => {
+  if (!Number.isSafeInteger(selectedPostId)) return [];
+
   const fetched = await fetch(
     `http://localhost:5173/api/posts/${selectedPostId}`,
     {
@@ -170,16 +178,32 @@ export default function Blog() {
     if (fetched.length === 0) return;
 
     postsStore[1]({ posts: new Map(fetched) });
-    if (params.id?.length === 0 || params.id == null) {
-      selectedPostSignal[1](fetched.at(0)?.[0] ?? null);
-      navigate(`${fetched[0][0]}`, { replace: true });
-    }
   });
 
-  createEffect(async () => {
+  const setSelected = selectedPostSignal[1];
+  createEffect(() => {
+    const paramId = params.id;
+    const fetchedKey = postsStore[0].posts.keys().next().value as
+      | PostId
+      | undefined;
+    // handle load without params after fetch
+    if ((paramId === "" || paramId == null) && fetchedKey != null) {
+      setSelected(fetchedKey);
+      navigate(`/blog/${fetchedKey}`);
+      return;
+    }
+
+    const paramIdNumber = Number(paramId);
+    if (!Number.isSafeInteger(paramIdNumber)) {
+      return;
+    }
+
+    // First load with params
     const selected = selectedPostSignal[0]();
-    if (selected == null && params.id != null && params.id != "") {
-      selectedPostSignal[1](postId(Number.parseInt(params.id)));
+    if (selected == null) {
+      setSelected(postId(paramIdNumber));
+      navigate(`/blog/${paramIdNumber}`);
+      return;
     }
   });
 
