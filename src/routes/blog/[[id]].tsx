@@ -8,7 +8,6 @@ import {
   For,
   createEffect,
   Show,
-  createRenderEffect,
   createResource,
   Suspense,
 } from "solid-js";
