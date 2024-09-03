@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS posts_content;
+
+DROP TABLE IF EXISTS posts;
