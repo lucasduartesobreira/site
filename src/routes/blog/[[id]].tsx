@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "@solidjs/router";
 import {
   createSignal,
   createContext,
-  Signal,
   useContext,
   createMemo,
   For,
@@ -10,24 +9,26 @@ import {
   Show,
   createResource,
   Suspense,
+  Setter,
+  Resource,
 } from "solid-js";
-import { createStore, SetStoreFunction, Store } from "solid-js/store";
+import { createStore } from "solid-js/store";
 import { Post, PostContent, postId, PostId } from "~/lib/postTypes";
 
 type SelectedPost = PostId | null;
-
-const SelectedPostCtx = createContext<Signal<SelectedPost>>(
-  createSignal<SelectedPost>(null),
-);
-
 type PostStore = { posts: Map<PostId, Post & Partial<PostContent>> };
 
-const PostsCtx = createContext<[Store<PostStore>, SetStoreFunction<PostStore>]>(
-  [{ posts: new Map<PostId, Post>([]) }, () => {}],
-);
+const PostsStoreCtx = createContext<PostStore>({
+  posts: new Map<PostId, Post>([]),
+});
+
+const PostControlCtx = createContext<{
+  selectedPost: Resource<(Post & Partial<PostContent>) | null>;
+  setSelectedPost: Setter<SelectedPost>;
+}>({ selectedPost: (() => null) as Resource<any>, setSelectedPost: () => {} });
 
 function PostMiniature(props: { post: Post; selected: boolean }) {
-  const selectPostSignal = useContext(SelectedPostCtx);
+  const { setSelectedPost } = useContext(PostControlCtx);
   const post = createMemo(() => props.post);
   const selectedColor = createMemo(() =>
     props.selected ? "border-sky-700 border-2" : "",
@@ -38,7 +39,7 @@ function PostMiniature(props: { post: Post; selected: boolean }) {
     <button
       class={`text-gray-700 px-2 py-1 rounded bg-slate-200 ${selectedColor()}`}
       onClick={() => {
-        selectPostSignal[1](post().id);
+        setSelectedPost(post().id);
         navigate(`/blog/${post().id}`);
       }}
     >
@@ -48,10 +49,11 @@ function PostMiniature(props: { post: Post; selected: boolean }) {
 }
 
 function SideBar() {
-  const [selectedPost] = useContext(SelectedPostCtx);
-  const [posts] = useContext(PostsCtx);
+  const { selectedPost } = useContext(PostControlCtx);
+  const postsCtx = useContext(PostsStoreCtx);
+  const posts = createMemo(() => postsCtx.posts);
 
-  const postsList = createMemo(() => Array.from(posts.posts.entries()));
+  const postsList = createMemo(() => Array.from(posts().entries()));
 
   return (
     <aside class="flex flex-col p-4 gap-4">
@@ -60,7 +62,7 @@ function SideBar() {
           {([id, post]) => (
             <PostMiniature
               post={post}
-              selected={(() => selectedPost() === id)()}
+              selected={(() => selectedPost()?.id === id)()}
             />
           )}
         </For>
@@ -69,50 +71,63 @@ function SideBar() {
   );
 }
 
-function Content() {
-  const params = useParams();
-  const selectedPostSignal = useContext(SelectedPostCtx);
-  const postsStore = useContext(PostsCtx);
+const usePost = () => {
+  const [posts, setPosts] = createStore<PostStore>({ posts: new Map([]) });
+  const [selectedPostId, setSelected] = createSignal<PostId | null>(null);
 
-  const selectedPostId = createMemo(() =>
-    (selectedPostSignal[0]() ?? (params.id !== "" && params.id != null))
-      ? postId(Number(params.id))
-      : null,
-  );
-  const setPosts = createMemo(() => postsStore[1]);
-  const posts = createMemo(() => postsStore[0]);
+  const fetchPosts = async () => {
+    const fetched = await fetchAllPosts();
 
-  const [selectedPost] = createResource(selectedPostId, async (source) => {
-    const post = posts().posts.get(source);
-    if (post == null || post.content == null) {
-      const result = await fetchPost(source);
+    return fetched;
+  };
 
-      return result.at(0)?.[1];
-    }
-
-    return post;
-  });
+  const [allFetchedPosts] = createResource(fetchPosts);
 
   createEffect(async () => {
-    const post = selectedPost();
-    if (post == null || post.content == null) return;
-    const postFound = posts().posts.get(post.id);
+    if (allFetchedPosts.state !== "ready") return;
 
-    if (
-      postFound != null &&
-      (post.version !== postFound.version || post.content !== postFound.content)
-    ) {
-      setPosts()((posts) => {
-        const postsEntries = posts.posts.set(post.id, post);
-        return {
-          posts: postsEntries,
-        };
-      });
-    }
+    const fetchedPosts = allFetchedPosts();
+
+    setPosts((posts) => {
+      const oldPosts = Array.from(posts.posts);
+      const newPosts = fetchedPosts.concat(oldPosts);
+
+      return { posts: new Map(newPosts) };
+    });
   });
 
+  const fetchContent = async (postId: PostId) => {
+    const postFound = posts.posts.get(postId);
+
+    if (postFound != null && postFound.content != null) {
+      return postFound;
+    }
+
+    const fetched = await fetchPost(postId);
+    const mapped = fetched.map(([, v]) => v);
+    return mapped.at(0) ?? null;
+  };
+
+  const [selectedPost] = createResource(selectedPostId, fetchContent);
+
+  createEffect(() => {
+    const post = selectedPost();
+    if (post == null || post.content == null) return;
+
+    setPosts(({ posts }) => {
+      const newP = posts.set(post.id, post);
+      return { posts: newP };
+    });
+  });
+
+  return [selectedPost, posts, setSelected] as const;
+};
+
+function Content() {
+  const { selectedPost } = useContext(PostControlCtx);
+
   return (
-    <Show when={selectedPost() != null} fallback={<div>No post</div>}>
+    <Suspense fallback={<div>No post</div>}>
       <main class="text-center mx-auto text-gray-700 p-4">
         <article>
           <h1 class="max-6-xs text-6xl text-sky-700 font-thin uppercase my-16">
@@ -121,7 +136,7 @@ function Content() {
           <p class="mt-8">{selectedPost()?.content}</p>
         </article>
       </main>
-    </Show>
+    </Suspense>
   );
 }
 
@@ -159,33 +174,15 @@ const fetchPost = async (
 };
 
 export default function Blog() {
-  const selectedPostSignal = createSignal<PostId | null>(null);
-  const postsStore = createStore<PostStore>({ posts: new Map([]) });
-
   const navigate = useNavigate();
   const params = useParams();
 
-  const [allFetchedPosts] = createResource(async () => await fetchAllPosts(), {
-    initialValue: [],
-  });
+  const [selectedPost, posts, setSelectedPost] = usePost();
 
-  createEffect(async () => {
-    if (allFetchedPosts.state != "ready") {
-      return;
-    }
-
-    const fetched = allFetchedPosts();
-    if (fetched.length === 0) return;
-
-    postsStore[1]({ posts: new Map(fetched) });
-  });
-
-  const setSelected = selectedPostSignal[1];
+  const setSelected = setSelectedPost;
   createEffect(() => {
     const paramId = params.id;
-    const fetchedKey = postsStore[0].posts.keys().next().value as
-      | PostId
-      | undefined;
+    const fetchedKey = posts.posts.keys().next().value as PostId | undefined;
     // handle load without params after fetch
     if ((paramId === "" || paramId == null) && fetchedKey != null) {
       setSelected(fetchedKey);
@@ -199,7 +196,7 @@ export default function Blog() {
     }
 
     // First load with params
-    const selected = selectedPostSignal[0]();
+    const selected = selectedPost()?.id;
     if (selected == null) {
       setSelected(postId(paramIdNumber));
       navigate(`/blog/${paramIdNumber}`);
@@ -208,15 +205,15 @@ export default function Blog() {
   });
 
   return (
-    <PostsCtx.Provider value={postsStore}>
-      <SelectedPostCtx.Provider value={selectedPostSignal}>
+    <PostsStoreCtx.Provider value={posts}>
+      <PostControlCtx.Provider value={{ selectedPost, setSelectedPost }}>
         <Suspense fallback={<div>Loading</div>}>
           <div class="flex">
             <SideBar />
             <Content />
           </div>
         </Suspense>
-      </SelectedPostCtx.Provider>
-    </PostsCtx.Provider>
+      </PostControlCtx.Provider>
+    </PostsStoreCtx.Provider>
   );
 }
