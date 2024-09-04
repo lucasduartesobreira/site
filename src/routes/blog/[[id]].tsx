@@ -11,11 +11,12 @@ import {
   Suspense,
   Setter,
   Resource,
+  Accessor,
 } from "solid-js";
 import { createStore } from "solid-js/store";
 import { Post, PostContent, postId, PostId } from "~/lib/postTypes";
 
-type SelectedPost = PostId | null;
+type SelectedPostId = PostId | null;
 type PostStore = { posts: Map<PostId, Post & Partial<PostContent>> };
 
 const PostsStoreCtx = createContext<PostStore>({
@@ -24,8 +25,15 @@ const PostsStoreCtx = createContext<PostStore>({
 
 const PostControlCtx = createContext<{
   selectedPost: Resource<(Post & Partial<PostContent>) | null>;
-  setSelectedPost: Setter<SelectedPost>;
-}>({ selectedPost: (() => null) as Resource<any>, setSelectedPost: () => {} });
+  setSelectedPost: Setter<SelectedPostId>;
+  selectedPostId: Accessor<SelectedPostId>;
+  minimalPost: Accessor<Post | null>;
+}>({
+  selectedPost: (() => null) as Resource<any>,
+  setSelectedPost: () => {},
+  selectedPostId: () => null,
+  minimalPost: () => null,
+});
 
 function PostMiniature(props: { post: Post; selected: boolean }) {
   const { setSelectedPost } = useContext(PostControlCtx);
@@ -49,7 +57,7 @@ function PostMiniature(props: { post: Post; selected: boolean }) {
 }
 
 function SideBar() {
-  const { selectedPost } = useContext(PostControlCtx);
+  const { selectedPostId } = useContext(PostControlCtx);
   const postsCtx = useContext(PostsStoreCtx);
   const posts = createMemo(() => postsCtx.posts);
 
@@ -62,7 +70,7 @@ function SideBar() {
           {([id, post]) => (
             <PostMiniature
               post={post}
-              selected={(() => selectedPost()?.id === id)()}
+              selected={(() => selectedPostId() === id)()}
             />
           )}
         </For>
@@ -71,9 +79,43 @@ function SideBar() {
   );
 }
 
+const useFetchContent = (
+  selectedPostId: Accessor<SelectedPostId>,
+  postsStore: PostStore,
+) => {
+  const fetchContent = async (postId: PostId) => {
+    const postFound = postsStore.posts.get(postId);
+
+    if (postFound != null && postFound.content != null) {
+      return postFound;
+    }
+
+    const fetched = await fetchPost(postId);
+    const mapped = fetched.map(([, v]) => v);
+    return mapped.at(0) ?? null;
+  };
+
+  const [selectedContent] = createResource(selectedPostId, fetchContent);
+
+  const postBasicData = createMemo(() => {
+    const id = selectedPostId();
+    if (id == null) return null;
+    const post = postsStore.posts.get(id);
+    if (post != null) return post;
+
+    const content = selectedContent();
+    if (content != null) return content;
+
+    return null;
+  });
+
+  return [selectedContent, postBasicData] as const;
+};
+
 const usePost = () => {
-  const [posts, setPosts] = createStore<PostStore>({ posts: new Map([]) });
-  const [selectedPostId, setSelected] = createSignal<PostId | null>(null);
+  const [postsStore, setPosts] = createStore<PostStore>({ posts: new Map([]) });
+  const [selectedPostId, setSelectedPostId] =
+    createSignal<SelectedPostId>(null);
 
   const fetchPosts = async () => {
     const fetched = await fetchAllPosts();
@@ -88,55 +130,50 @@ const usePost = () => {
 
     const fetchedPosts = allFetchedPosts();
 
-    setPosts((posts) => {
-      const oldPosts = Array.from(posts.posts);
+    setPosts("posts", (posts) => {
+      const oldPosts = Array.from(posts);
       const newPosts = fetchedPosts.concat(oldPosts);
 
-      return { posts: new Map(newPosts) };
+      return new Map(newPosts);
     });
   });
 
-  const fetchContent = async (postId: PostId) => {
-    const postFound = posts.posts.get(postId);
-
-    if (postFound != null && postFound.content != null) {
-      return postFound;
-    }
-
-    const fetched = await fetchPost(postId);
-    const mapped = fetched.map(([, v]) => v);
-    return mapped.at(0) ?? null;
-  };
-
-  const [selectedPost] = createResource(selectedPostId, fetchContent);
+  const [selectedPost, minimalPost] = useFetchContent(
+    selectedPostId,
+    postsStore,
+  );
 
   createEffect(() => {
     const post = selectedPost();
     if (post == null || post.content == null) return;
 
-    setPosts(({ posts }) => {
-      const newP = posts.set(post.id, post);
-      return { posts: newP };
-    });
+    setPosts("posts", (posts) => new Map(posts.set(post.id, post)));
   });
 
-  return [selectedPost, posts, setSelected] as const;
+  return [
+    selectedPost,
+    postsStore,
+    setSelectedPostId,
+    selectedPostId,
+    minimalPost,
+  ] as const;
 };
 
 function Content() {
-  const { selectedPost } = useContext(PostControlCtx);
+  const { selectedPost, minimalPost: minimalPost } = useContext(PostControlCtx);
 
   return (
-    <Suspense fallback={<div>No post</div>}>
-      <main class="text-center mx-auto text-gray-700 p-4">
-        <article>
-          <h1 class="max-6-xs text-6xl text-sky-700 font-thin uppercase my-16">
-            {selectedPost()?.title}
-          </h1>
+    <main class="text-center mx-auto text-gray-700 p-4">
+      <article>
+        <h1 class="max-6-xs text-6xl text-sky-700 font-thin uppercase my-16">
+          {minimalPost()?.title}
+        </h1>
+        <p class="mt-8">{minimalPost()?.summary}</p>
+        <Suspense fallback="Loading...">
           <p class="mt-8">{selectedPost()?.content}</p>
-        </article>
-      </main>
-    </Suspense>
+        </Suspense>
+      </article>
+    </main>
   );
 }
 
@@ -177,7 +214,8 @@ export default function Blog() {
   const navigate = useNavigate();
   const params = useParams();
 
-  const [selectedPost, posts, setSelectedPost] = usePost();
+  const [selectedPost, posts, setSelectedPost, selectedPostId, minimalPost] =
+    usePost();
 
   const setSelected = setSelectedPost;
   createEffect(() => {
@@ -206,13 +244,20 @@ export default function Blog() {
 
   return (
     <PostsStoreCtx.Provider value={posts}>
-      <PostControlCtx.Provider value={{ selectedPost, setSelectedPost }}>
-        <Suspense fallback={<div>Loading</div>}>
-          <div class="flex">
-            <SideBar />
+      <PostControlCtx.Provider
+        value={{
+          selectedPost,
+          setSelectedPost,
+          selectedPostId,
+          minimalPost,
+        }}
+      >
+        <div class="flex">
+          <SideBar />
+          <Suspense>
             <Content />
-          </div>
-        </Suspense>
+          </Suspense>
+        </div>
       </PostControlCtx.Provider>
     </PostsStoreCtx.Provider>
   );
