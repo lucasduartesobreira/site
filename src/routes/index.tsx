@@ -44,20 +44,17 @@ function SocialMediaLink(props: { kind: SocialMediaKinds }) {
 function BasicInfo() {
   return (
     <>
-      <h1 class="max-6-xs text-6xl text-sky-700 font-thin uppercase my-16">
+      <h1 class="text-6xl text-primary font-bold font-titillium uppercase mt-4 mb-2">
         Lucas Duarte
       </h1>
-      <a>Sub title</a>
       <div>
+      <a class="font-regular text-4xl text-secondary mb-4">Backend Developer</a>
         <For each={Object.keys(links) as SocialMediaKinds[]}>
           {(data) => <SocialMediaLink kind={data} />}
         </For>
       </div>
-      <section>
-        <p>
-          Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
-          ipsum Lorem ipsum Lorem ipsum
-        </p>
+      <section class="text-montserrat">
+        <p>Text about myself</p>
       </section>
     </>
   );
