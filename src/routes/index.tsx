@@ -47,7 +47,9 @@ function BasicInfo() {
       <h1 class="text-6xl text-primary font-bold font-titillium uppercase mt-4 mb-2">
         Lucas Duarte
       </h1>
-      <a class="font-regular text-4xl text-secondary mb-4">Backend Developer</a>
+      <h2 class="font-regular text-4xl text-secondary mb-4">
+        Backend Developer
+      </h2>
       <div class="flex w-full justify-center gap-2 my-2">
         <For each={Object.keys(links) as SocialMediaKinds[]}>
           {(data) => <SocialMediaLink kind={data} />}
