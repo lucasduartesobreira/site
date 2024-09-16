@@ -1,32 +1,41 @@
-import { createMemo, For } from "solid-js";
+import {
+  Github,
+  Linkedin,
+  LucideProps,
+  Mail,
+  Twitch,
+  Twitter,
+  Youtube,
+} from "lucide-solid";
+import { createMemo, For, JSXElement } from "solid-js";
 
 const links = {
-  ["linkedin"]: "",
-  ["youtube"]: "",
-  ["github"]: "",
-  ["twitch"]: "",
-  ["x"]: "",
-  ["gmail"]: "",
-} as const;
-
-const icons: { [K in keyof typeof links]: string } = {
-  ["linkedin"]: "",
-  ["youtube"]: "",
-  ["github"]: "",
-  ["twitch"]: "",
-  ["x"]: "",
-  ["gmail"]: "",
+  ["linkedin"]: "https://www.linkedin.com/in/lucasduartesobreira",
+  ["youtube"]: "https://youtube.com/@HiImDots",
+  ["github"]: "https://github.com/lucasduartesobreira",
+  ["twitch"]: "https://twitch.tv/imdots_",
+  ["x"]: "https://x.com/imdots_",
+  ["gmail"]: "mailto:lucasduartesobreira@gmail.com",
 } as const;
 
 type SocialMediaKinds = keyof typeof links;
+const icons: { [K in keyof typeof links]: (props: LucideProps) => JSXElement } =
+  {
+    ["linkedin"]: (props) => <Linkedin {...props} />,
+    ["youtube"]: (props) => <Youtube {...props} />,
+    ["github"]: (props) => <Github {...props} />,
+    ["twitch"]: (props) => <Twitch {...props} />,
+    ["x"]: (props) => <Twitter {...props} />,
+    ["gmail"]: (props) => <Mail {...props} />,
+  } as const;
 
 function SocialMediaLink(props: { kind: SocialMediaKinds }) {
   const link = createMemo(() => links[props.kind]);
   const icon = createMemo(() => icons[props.kind]);
   return (
     <a href={link()}>
-      <figure>
-        <img src={icon()} alt={`Icone da Rede ${props.kind}`}></img>
+      <figure class="text-tertiary">
+        {icon()({ "aria-label": `Check out my ${props.kind}`, size: 20 })}
       </figure>
     </a>
   );
