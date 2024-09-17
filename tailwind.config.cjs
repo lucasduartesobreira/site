@@ -17,6 +17,7 @@ module.exports = {
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],
         titillium: ["Titillium Web", "sans-serif"],
+        jetbrains: ["JetBrains Mono", "sans-serif"],
       },
     },
   },
