@@ -4,15 +4,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#7695FF",
-        secondary: "#9DBDFF",
+        //primary: "#7695FF",
+        primary: "hsl(var(--primary))",
+        //secondary: "#9DBDFF",
+        secondary: "hsl(var(--secondary))",
         tertiary: "#FF9874",
         /*
          *background: "#FFD7C4",
          *foreground: "#374151",
          */
-        background: "var(hsl(--background))",
-        foreground: "var(hsl(--foreground))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
       },
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],
