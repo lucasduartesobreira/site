@@ -7,7 +7,7 @@ import {
   Twitter,
   Youtube,
 } from "lucide-solid";
-import { createMemo, For, JSXElement } from "solid-js";
+import { createMemo, For, JSXElement, PropsWithChildren } from "solid-js";
 
 const links = {
   ["linkedin"]: "https://www.linkedin.com/in/lucasduartesobreira",
@@ -84,6 +84,14 @@ function FolderTab(props: { text: string; active: boolean; zIndex: string }) {
   );
 }
 
+function FolderPaper(props: PropsWithChildren) {
+  return (
+    <div class="h-full w-full rounded-md p-2 bg-background/90 z-[1000]">
+      {props.children}
+    </div>
+  );
+}
+
 function Folder() {
   return (
     <div class="w-full h-full flex flex-col snap-start">
@@ -94,9 +102,10 @@ function Folder() {
           <FolderTab active={false} text="SECRETS" zIndex="z-[9]" />
         </ul>
       </nav>
-      <div class="bg-tertiary50 h-full rounded-b-xl rounded-r-xl border-tertiary border-t-2 border-b-2 border-x-2 z-10 overflow-clip relative">
-        <Summary />
-        <Journey />
+      <div class="bg-tertiary50 h-full rounded-b-xl rounded-r-xl border-tertiary border-t-2 border-b-2 border-x-2 z-10 overflow-y-auto overflow-x-hidden relative p-2">
+        <FolderPaper>
+          <Summary />
+        </FolderPaper>
       </div>
     </div>
   );
