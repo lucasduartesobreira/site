@@ -62,6 +62,19 @@ function BasicInfo() {
 function Folder() {
   return (
     <div class="w-full h-full flex flex-col gap-0">
+      <nav class="top-0">
+        <ul class="mt-1 flex flex-row w-full gap-2">
+          <li class="bg-tertiary50 p-1 rounded-t-md border-tertiary border-t-2 border-x-2 z-50 relative">
+            Summary
+            <div class="h-1 w-full absolute -bottom-1 left-0 bg-tertiary50" />
+          </li>
+          <li class="box-shadow-lg bg-tertiary50 p-1 rounded-t-md">Journey</li>
+        </ul>
+      </nav>
+      <div class="bg-tertiary50 h-full rounded-b-xl rounded-r-xl border-tertiary border-t-2 border-b-2 border-x-2 z-40 overflow-clip relative">
+        <Summary />
+        <Journey />
+      </div>
     </div>
   );
 }
