@@ -10,7 +10,7 @@ export default function Nav() {
       : "border-transparent  hover:border-primary";
 
   const beautifulHover =
-    "hover:text-transparent hover:bg-gradient-to-r hover:from-primary hover:via-primary hover:to-primary/80 hover:bg-clip-text";
+    "hover:text-transparent hover:bg-gradient-to-r hover:from-primary hover:via-primary hover:to-primary/70 hover:bg-clip-text";
   return (
     <header
       role="banner"
