@@ -43,7 +43,7 @@ function SocialMediaLink(props: { kind: SocialMediaKinds }) {
 
 function BasicInfo() {
   return (
-    <div class="p-8 rounded-xl mt-auto mb-auto transition-all ease-out">
+    <div class="p-8 rounded-xl mt-auto mb-auto transition-all ease-out snap-center">
       <h1 class="text-6xl text-primary font-bold font-titillium uppercase mt-4 mb-2">
         Lucas Duarte
       </h1>
@@ -61,7 +61,6 @@ function BasicInfo() {
 
 function Folder() {
   return (
-    <div class="w-full h-full flex flex-col gap-0">
       <nav class="top-0">
         <ul class="mt-1 flex flex-row w-full gap-2">
           <li class="bg-tertiary50 p-1 rounded-t-md border-tertiary border-t-2 border-x-2 z-50 relative">
@@ -69,6 +68,7 @@ function Folder() {
             <div class="h-1 w-full absolute -bottom-1 left-0 bg-tertiary50" />
           </li>
           <li class="box-shadow-lg bg-tertiary50 p-1 rounded-t-md">Journey</li>
+    <div class="w-full h-full flex flex-col snap-start">
         </ul>
       </nav>
       <div class="bg-tertiary50 h-full rounded-b-xl rounded-r-xl border-tertiary border-t-2 border-b-2 border-x-2 z-40 overflow-clip relative">
@@ -89,7 +89,7 @@ function Journey() {
 
 export default function About() {
   return (
-    <main class="flex max-md:flex-wrap items-center justify-center gap-4 text-center w-full h-full mx-auto font-montserrat font-regular text-foreground/80 p-4">
+    <main class="flex max-md:flex-wrap items-center justify-center gap-4 text-center w-full h-full mx-auto font-montserrat font-regular text-foreground/80 p-4 overflow-x-hidden overflow-y-auto scrollbar max-md:snap-y max-md:snap-proximity max-md:snap-always scroll-mr-2">
       <BasicInfo />
       <Folder />
     </main>

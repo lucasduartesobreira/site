@@ -42,4 +42,30 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
+  margin: 0;
+}
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: hsl(var(--background));
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: hsl(var(--tertiary) / 50%);
+    /*background: #e0cbcb;*/
+    height: 12px;
+    max-height:24px;
+    border-radius: 9999px;
+    /*border: 1px solid hsl(var(--tertiary) / 50%);*/
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--tertiary));
+  }
 }
