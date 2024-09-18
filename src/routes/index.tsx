@@ -59,19 +59,38 @@ function BasicInfo() {
   );
 }
 
+function FolderTab(props: { text: string; active: boolean; zIndex: string }) {
+  const text = createMemo(() => props.text);
+  const borderColor = createMemo(() =>
+    props.active ? "border-tertiary" : "border-tertiary/40",
+  );
+
+  const activeZIndex = createMemo(() => props.zIndex);
+
+  return (
+    <li
+      class={`inline-flex justify-center items-center font-medium italic text-xs bg-tertiary50 p-1 rounded-t-md ${borderColor()} border-t-2 border-x-2 ${activeZIndex()} relative`}
+    >
+      <div
+        class={`absolute translate-y-[20px] translate-x-[1px] -bottom-[0px] -right-[20px] h-[38px] w-[30px] border-r-2 ${borderColor()} bg-tertiary50 transform -rotate-[53deg] z-50`}
+      />
+      <a class="z-50">{text()}</a>
+      <div class="h-1 w-full absolute -bottom-1 left-0 bg-tertiary50 z-50" />
+    </li>
+  );
+}
+
 function Folder() {
   return (
-      <nav class="top-0">
-        <ul class="mt-1 flex flex-row w-full gap-2">
-          <li class="bg-tertiary50 p-1 rounded-t-md border-tertiary border-t-2 border-x-2 z-50 relative">
-            Summary
-            <div class="h-1 w-full absolute -bottom-1 left-0 bg-tertiary50" />
-          </li>
-          <li class="box-shadow-lg bg-tertiary50 p-1 rounded-t-md">Journey</li>
     <div class="w-full h-full flex flex-col snap-start">
+      <nav class="">
+        <ul class="h-[24px] mt-1 flex flex-row w-full gap-3 text-sm">
+          <FolderTab active={true} text="SUMMARY" zIndex="z-30" />
+          <FolderTab active={false} text="JOURNEY" zIndex="z-10" />
+          <FolderTab active={false} text="SECRETS" zIndex="z-[9]" />
         </ul>
       </nav>
-      <div class="bg-tertiary50 h-full rounded-b-xl rounded-r-xl border-tertiary border-t-2 border-b-2 border-x-2 z-40 overflow-clip relative">
+      <div class="bg-tertiary50 h-full rounded-b-xl rounded-r-xl border-tertiary border-t-2 border-b-2 border-x-2 z-10 overflow-clip relative">
         <Summary />
         <Journey />
       </div>
