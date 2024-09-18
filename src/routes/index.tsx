@@ -34,8 +34,8 @@ function SocialMediaLink(props: { kind: SocialMediaKinds }) {
   const icon = createMemo(() => icons[props.kind]);
   return (
     <a href={link()}>
-      <figure class="text-tertiary">
-        {icon()({ "aria-label": `Check out my ${props.kind}`, size: 20 })}
+      <figure class="text-quaternary">
+        {icon()({ "aria-label": `Check out my ${props.kind}`, size: 24 })}
       </figure>
     </a>
   );

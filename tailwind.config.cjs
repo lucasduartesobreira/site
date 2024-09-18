@@ -11,6 +11,7 @@ module.exports = {
         tertiary: "hsl(var(--tertiary))",
         //tertiary: "#FF9874",
         tertiary50: "#FFB89C",
+        quaternary: "#561D25",
         /*
          *background: "#FFD7C4",
          *foreground: "#374151",
