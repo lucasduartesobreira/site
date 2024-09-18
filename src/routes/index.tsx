@@ -55,9 +55,6 @@ function BasicInfo() {
           {(data) => <SocialMediaLink kind={data} />}
         </For>
       </div>
-      <section class="text-montserrat">
-        <p>Text about myself</p>
-      </section>
     </div>
   );
 }
