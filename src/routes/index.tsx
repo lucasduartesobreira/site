@@ -69,13 +69,17 @@ function FolderTab(props: { text: string; active: boolean; zIndex: string }) {
 
   return (
     <li
-      class={`inline-flex justify-center items-center font-medium italic text-xs bg-tertiary50 p-1 rounded-t-md ${borderColor()} border-t-2 border-x-2 ${activeZIndex()} relative`}
+      class={`inline-flex justify-center items-center font-medium italic text-xs bg-tertiary50 pl-0.5 pr-2 rounded-t-md ${borderColor()} border-t-2 border-x-2 ${activeZIndex()} relative`}
     >
-      <div
-        class={`absolute translate-y-[20px] translate-x-[1px] -bottom-[0px] -right-[20px] h-[38px] w-[30px] border-r-2 ${borderColor()} bg-tertiary50 transform -rotate-[53deg] z-50`}
-      />
-      <a class="z-50">{text()}</a>
       <div class="h-1 w-full absolute -bottom-1 left-0 bg-tertiary50 z-50" />
+      <div
+        class={`absolute translate-x-full -bottom-[1px] right-[1px] h-[27px] translate-y-[3px] w-[30px] overflow-clip`}
+      >
+        <div
+          class={`absolute origin-top-left h-full w-[44px]  border-t-2 ${borderColor()} bg-tertiary50 transform rotate-[37deg] z-50`}
+        />
+      </div>
+      <a class="z-50">{text()}</a>
     </li>
   );
 }
