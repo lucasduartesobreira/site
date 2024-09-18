@@ -43,7 +43,7 @@ function SocialMediaLink(props: { kind: SocialMediaKinds }) {
 
 function BasicInfo() {
   return (
-    <>
+    <div class="p-8 rounded-xl mt-auto mb-auto transition-all ease-out">
       <h1 class="text-6xl text-primary font-bold font-titillium uppercase mt-4 mb-2">
         Lucas Duarte
       </h1>
@@ -58,7 +58,14 @@ function BasicInfo() {
       <section class="text-montserrat">
         <p>Text about myself</p>
       </section>
-    </>
+    </div>
+  );
+}
+
+function Folder() {
+  return (
+    <div class="w-full h-full flex flex-col gap-0">
+    </div>
   );
 }
 
@@ -72,10 +79,9 @@ function Journey() {
 
 export default function About() {
   return (
-    <main class="text-center mx-auto font-montserrat font-regular text-foreground/80 p-4">
+    <main class="flex max-md:flex-wrap items-center justify-center gap-4 text-center w-full h-full mx-auto font-montserrat font-regular text-foreground/80 p-4">
       <BasicInfo />
-      <Summary />
-      <Journey />
+      <Folder />
     </main>
   );
 }
