@@ -13,20 +13,20 @@
 }
 
 :root {
-  --background: 19, 100%, 88%;
-  --foreground: 217, 19%, 27%;
-  --primary: 	206, 46%, 37%;
-  --secondary: 194, 76%, 29%;
-  --tertiary: 16, 100%, 73%;
+  --background: 19 100% 88%;
+  --foreground: 217 19% 27%;
+  --primary: 	206 46% 37%;
+  --secondary: 194 76% 29%;
+  --tertiary: 16 100% 73%;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: 19, 100%, 88%;
-    --foreground: 217, 19%, 27%;
-    --primary: 	206, 46%, 37%;
-    --secondary: 194, 76%, 29%;
-    --tertiary: 16, 100%, 73%;
+    --background: 19 100% 88%;
+    --foreground: 217 19% 27%;
+    --primary: 	206 46% 37%;
+    --secondary: 194 76% 29%;
+    --tertiary: 16 100% 73%;
   }
 }
 
