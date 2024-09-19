@@ -102,7 +102,7 @@ function Folder() {
           <FolderTab active={false} text="SECRETS" zIndex="z-[9]" />
         </ul>
       </nav>
-      <div class="bg-tertiary50 h-full rounded-b-xl rounded-r-xl border-tertiary border-t-2 border-b-2 border-x-2 z-10 overflow-y-auto overflow-x-hidden relative p-2">
+      <div class="bg-tertiary50 h-full rounded-b-xl rounded-r-xl border-tertiary border-t-2 border-b-2 border-x-2 z-10 overflow-y-auto overflow-x-hidden relative py-4 px-4">
         <FolderPaper>
           <Summary />
         </FolderPaper>
