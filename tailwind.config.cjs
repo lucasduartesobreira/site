@@ -17,6 +17,7 @@ module.exports = {
          *foreground: "#374151",
          */
         background: "hsl(var(--background))",
+        ["background-50"]: "#ffede0",
         foreground: "hsl(var(--foreground))",
       },
       fontFamily: {
