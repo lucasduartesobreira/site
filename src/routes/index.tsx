@@ -86,7 +86,7 @@ function FolderTab(props: { text: string; active: boolean; zIndex: string }) {
 
 function FolderPaper(props: PropsWithChildren) {
   return (
-    <div class="h-full w-full rounded-md p-2 bg-background/90 z-[1000]">
+    <div class="h-full w-full rounded-[1px] drop-shadow-[2px_2px_12px_rgba(0,0,0,0.1)] p-2 bg-background z-[1000]">
       {props.children}
     </div>
   );
