@@ -69,7 +69,7 @@ function FolderTab(props: { text: string; active: boolean; zIndex: string }) {
 
   return (
     <li
-      class={`inline-flex justify-center items-center font-medium italic text-xs bg-tertiary50 pl-0.5 pr-2 rounded-t-md ${borderColor()} border-t-2 border-x-2 ${activeZIndex()} relative`}
+      class={`inline-flex justify-center items-center font-medium italic text-xs bg-tertiary50 pl-1 pr-2 rounded-t-md ${borderColor()} border-t-2 border-x-2 ${activeZIndex()} relative`}
     >
       <div class="h-1 w-full absolute -bottom-1 left-0 bg-tertiary50 z-50" />
       <div
