@@ -59,7 +59,12 @@ function BasicInfo() {
   );
 }
 
-function FolderTab(props: { text: string; active: boolean; zIndex: string }) {
+function FolderTab(props: {
+  text: string;
+  active: boolean;
+  zIndex: string;
+  setActiveTab: () => void;
+}) {
   const text = createMemo(() => props.text);
   const borderColor = createMemo(() =>
     props.active ? "border-tertiary" : "border-tertiary/40",
@@ -69,7 +74,7 @@ function FolderTab(props: { text: string; active: boolean; zIndex: string }) {
 
   return (
     <li
-      class={`inline-flex justify-center items-center font-medium italic text-xs bg-tertiary50 pl-1 pr-2 rounded-t-md ${borderColor()} border-t-2 border-x-2 ${activeZIndex()} relative`}
+      class={`inline-flex justify-center items-center font-medium italic text-xs bg-tertiary50 pl-1 pr-2 rounded-t-md ${borderColor()} border-t-2 border-x-2 transition-all ease-out ${activeZIndex()} relative`}
     >
       <div class="h-1 w-full absolute -bottom-1 left-0 bg-tertiary50 z-50" />
       <div
@@ -79,7 +84,9 @@ function FolderTab(props: { text: string; active: boolean; zIndex: string }) {
           class={`absolute origin-top-left h-full w-[44px]  border-t-2 ${borderColor()} bg-tertiary50 transform rotate-[37deg] z-50`}
         />
       </div>
-      <a class="z-50">{text()}</a>
+      <button class="z-50" onClick={() => props.setActiveTab()}>
+        {text().toUpperCase()}
+      </button>
     </li>
   );
 }
