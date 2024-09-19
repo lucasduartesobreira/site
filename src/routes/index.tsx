@@ -7,7 +7,15 @@ import {
   Twitter,
   Youtube,
 } from "lucide-solid";
-import { createMemo, For, JSXElement, PropsWithChildren } from "solid-js";
+import {
+  createMemo,
+  createSignal,
+  For,
+  JSXElement,
+  Match,
+  PropsWithChildren,
+  Switch,
+} from "solid-js";
 
 const links = {
   ["linkedin"]: "https://www.linkedin.com/in/lucasduartesobreira",
@@ -100,18 +108,48 @@ function FolderPaper(props: PropsWithChildren) {
 }
 
 function Folder() {
+  const [activeTab, setActiveTab] = createSignal<"summary" | "journey">(
+    "summary",
+  );
+
   return (
     <div class="w-full h-full flex flex-col snap-start">
       <nav class="">
         <ul class="h-[24px] mt-1 flex flex-row w-full gap-3 text-sm">
-          <FolderTab active={true} text="SUMMARY" zIndex="z-30" />
-          <FolderTab active={false} text="JOURNEY" zIndex="z-10" />
-          <FolderTab active={false} text="SECRETS" zIndex="z-[9]" />
+          <FolderTab
+            active={activeTab() === "summary"}
+            text="SUMMARY"
+            zIndex={
+              activeTab() === "summary" ? "z-30 opacity-100" : "z-10 opacity-90"
+            }
+            setActiveTab={() => setActiveTab("summary")}
+          />
+          <FolderTab
+            active={activeTab() === "journey"}
+            text="JOURNEY"
+            zIndex={
+              activeTab() === "journey" ? "z-30 opacity-100" : "z-10 opacity-90"
+            }
+            setActiveTab={() => setActiveTab("journey")}
+          />
+          <FolderTab
+            active={false}
+            text="SECRETS"
+            zIndex="z-[9] opacity-85"
+            setActiveTab={() => {}}
+          />
         </ul>
       </nav>
-      <div class="bg-tertiary50 h-full rounded-b-xl rounded-r-xl border-tertiary border-t-2 border-b-2 border-x-2 z-10 overflow-y-auto overflow-x-hidden relative py-4 px-4">
+      <div class="bg-tertiary50 h-full rounded-b-xl rounded-r-xl border-tertiary border-t-2 border-b-2 border-x-2 z-10 overflow-y-auto overflow-x-hidden relative py-4 px-4 transition-all ease-out">
         <FolderPaper>
-          <Summary />
+          <Switch>
+            <Match when={activeTab() === "summary"}>
+              <Summary />
+            </Match>
+            <Match when={activeTab() === "journey"}>
+              <Journey />
+            </Match>
+          </Switch>
         </FolderPaper>
       </div>
     </div>
