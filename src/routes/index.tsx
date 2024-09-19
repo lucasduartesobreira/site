@@ -16,6 +16,7 @@ import {
   PropsWithChildren,
   Switch,
 } from "solid-js";
+import { LoremIpsum } from "~/components/LoremIpsum";
 
 const links = {
   ["linkedin"]: "https://www.linkedin.com/in/lucasduartesobreira",
@@ -157,7 +158,12 @@ function Folder() {
 }
 
 function Summary() {
-  return <p>Summary</p>;
+  return (
+    <>
+      <h2>Summary</h2>
+      <LoremIpsum />
+    </>
+  );
 }
 
 function Journey() {
