@@ -160,9 +160,9 @@ function Content() {
   const { selectedPost, minimalPost: minimalPost } = useContext(PostControlCtx);
 
   return (
-    <main class="text-center mx-auto text-gray-700 p-4">
+    <main class="text-center mx-auto font-montserrat text-foreground p-4 overflow-y-auto">
       <article>
-        <h1 class="max-6-xs text-6xl text-sky-700 font-thin uppercase my-16">
+        <h1 class="max-6-xs text-6xl text-primary font-semibold font-titillium uppercase my-16">
           {minimalPost()?.title}
         </h1>
         <p class="mt-8">{minimalPost()?.summary}</p>
@@ -256,7 +256,7 @@ export default function Blog() {
           minimalPost,
         }}
       >
-        <div class="flex">
+        <div class="flex relative overflow-y-hidden">
           <SideBar />
           <Suspense>
             <Content />
