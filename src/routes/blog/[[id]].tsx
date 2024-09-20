@@ -39,13 +39,16 @@ const PostControlCtx = createContext<{
 
 function PostMiniature(props: { post: Post; selected: boolean }) {
   const post = createMemo(() => props.post);
-  const selectedColor = createMemo(() =>
-    props.selected ? "border-sky-700 border-2" : "",
+  const selectedColor = createMemo(
+    () =>
+      props.selected
+        ? "border-tertiary border-2 opacity-100"
+        : "border-background",
   );
 
   return (
     <a
-      class={`text-gray-700 px-2 py-1 rounded bg-slate-200 ${selectedColor()}`}
+      class={`text-gray-700 px-2 mx-2 py-1 rounded border-2 transition-all ease-out duration-500 ${selectedColor()}`}
       href={`/blog/${post().id}`}
     >
       {post().title}
@@ -61,7 +64,7 @@ function SideBar() {
   const postsList = createMemo(() => Array.from(posts().entries()));
 
   return (
-    <aside class="flex flex-col p-2 gap-2 border-r-2 border-tertiary50 min-w-max mr-1">
+    <aside class="flex flex-col p-2 gap-2 border-r-2 border-tertiary50 min-w-max mr-4 h-full mb-1 font-titillium font-regular">
       <Show when={postsList().length > 0} fallback={<div>{"No posts"}</div>}>
         <For each={postsList()}>
           {([id, post]) => (
@@ -256,7 +259,7 @@ export default function Blog() {
           minimalPost,
         }}
       >
-        <div class="flex relative overflow-y-hidden">
+        <div class="flex relative overflow-y-hidden h-full">
           <SideBar />
           <Suspense>
             <Content />
