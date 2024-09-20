@@ -61,7 +61,7 @@ function SideBar() {
   const postsList = createMemo(() => Array.from(posts().entries()));
 
   return (
-    <aside class="flex flex-col p-4 gap-2">
+    <aside class="flex flex-col p-2 gap-2 border-r-2 border-tertiary50 min-w-max mr-1">
       <Show when={postsList().length > 0} fallback={<div>{"No posts"}</div>}>
         <For each={postsList()}>
           {([id, post]) => (
