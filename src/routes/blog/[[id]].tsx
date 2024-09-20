@@ -36,23 +36,18 @@ const PostControlCtx = createContext<{
 });
 
 function PostMiniature(props: { post: Post; selected: boolean }) {
-  const { setSelectedPost } = useContext(PostControlCtx);
   const post = createMemo(() => props.post);
   const selectedColor = createMemo(() =>
     props.selected ? "border-sky-700 border-2" : "",
   );
 
-  const navigate = useNavigate();
   return (
-    <button
+    <a
       class={`text-gray-700 px-2 py-1 rounded bg-slate-200 ${selectedColor()}`}
-      onClick={() => {
-        setSelectedPost(post().id);
-        navigate(`/blog/${post().id}`);
-      }}
+      href={`/blog/${post().id}`}
     >
       {post().title}
-    </button>
+    </a>
   );
 }
 
@@ -64,7 +59,7 @@ function SideBar() {
   const postsList = createMemo(() => Array.from(posts().entries()));
 
   return (
-    <aside class="flex flex-col p-4 gap-4">
+    <aside class="flex flex-col p-4 gap-2">
       <Show when={postsList().length > 0} fallback={<div>{"No posts"}</div>}>
         <For each={postsList()}>
           {([id, post]) => (
@@ -239,6 +234,10 @@ export default function Blog() {
       setSelected(postId(paramIdNumber));
       navigate(`/blog/${paramIdNumber}`);
       return;
+    }
+
+    if (selected != paramIdNumber) {
+      setSelected(postId(paramIdNumber));
     }
   });
 
