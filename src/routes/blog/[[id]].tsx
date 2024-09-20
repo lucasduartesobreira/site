@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from "@solidjs/router";
+import rehypeRaw from "rehype-raw";
 import {
   createSignal,
   createContext,
@@ -14,6 +15,7 @@ import {
   Accessor,
 } from "solid-js";
 import { createStore } from "solid-js/store";
+import { SolidMarkdown } from "solid-markdown";
 import { Post, PostContent, postId, PostId } from "~/lib/postTypes";
 
 type SelectedPostId = PostId | null;
@@ -165,7 +167,10 @@ function Content() {
         </h1>
         <p class="mt-8">{minimalPost()?.summary}</p>
         <Suspense fallback="Loading...">
-          <p class="mt-8">{selectedPost()?.content}</p>
+          <SolidMarkdown
+            children={selectedPost()?.content}
+            rehypePlugins={[rehypeRaw]}
+          ></SolidMarkdown>
         </Suspense>
       </article>
     </main>
