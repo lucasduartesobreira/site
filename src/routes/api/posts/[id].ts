@@ -9,7 +9,7 @@ const fetchPost = async (
     return [];
   }
   const getPostResult = await dbClient().execute({
-    sql: "SELECT * FROM posts_content LEFT JOIN posts WHERE posts.id == ? AND posts.id == posts_content.post_id LIMIT 1",
+    sql: "SELECT * FROM posts_content LEFT JOIN posts WHERE posts.id == ? AND posts.id == posts_content.post_id ORDER BY posts_content.version DESC LIMIT 1",
     args: [selectedPostId],
   });
   const row = getPostResult.rows as unknown as PostContent[];
