@@ -2,10 +2,10 @@
   "name": "personal-project",
   "type": "module",
   "scripts": {
-    "dev": "vinxi dev --port 5173",
+    "dev": "source ./.env && vinxi dev --port 5173",
     "db": "source ./.env && turso dev --db-file=$DATABASE_PATH",
     "build": "vinxi build",
-    "start": "vinxi start"
+    "start": "source ./.env && vinxi start"
   },
   "dependencies": {
     "@libsql/client": "^0.10.0",
