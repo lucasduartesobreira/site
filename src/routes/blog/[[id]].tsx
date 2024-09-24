@@ -68,12 +68,12 @@ function SideBar() {
   const [open, setSideBarOpen] = createSignal(true);
 
   const openOrCloseStyle = () =>
-    open() ? "min-w-72 lg:max-w-sm" : "min-w-6 max-w-6 [&_a]:hidden";
+    open()
+      ? "md:min-w-72 md:max-w-sm max-md:grow"
+      : "max-md:min-w-2 max-md:max-w-2 md:min-w-6 md:max-w-6 [&_a]:hidden";
 
   return (
-    <aside
-      class={`flex flex-col p-2 gap-2 border-r-2 border-tertiary50 mr-4 h-full mb-1 font-titillium font-regular relative transition-all ease-out duration-500 ${openOrCloseStyle()} `}
-    >
+    <aside class={`flex ${open() ? "max-md:min-w-full" : "min-w-max"} gap-1`}>
       <Show
         when={postsList().length > 0}
         fallback={
@@ -82,7 +82,19 @@ function SideBar() {
           </div>
         }
       >
-        <div class="absolute -right-2 translate-x-full">
+        <ul
+          class={`flex flex-col p-2 gap-2 border-r-2 border-tertiary50 h-full mb-1 font-regular transition-all ease-out duration-500 ${openOrCloseStyle()} `}
+        >
+          <For each={postsList()}>
+            {([id, post]) => (
+              <PostMiniature
+                post={post}
+                selected={(() => selectedPostId() === id)()}
+              />
+            )}
+          </For>
+        </ul>
+        <div class="h-full min-w-max max-w-max grow-0 shrink-0 flex items-start">
           <button
             class={`${open() ? "hidden" : ""} flex items-center justify-center self-center w-8 h-8 hover:border-2 hover:border-primary text-primary rounded-md select:bg-tertiary50 transition-all ease-out`}
             onClick={(e) => {
@@ -104,14 +116,6 @@ function SideBar() {
             <ChevronsLeft />
           </button>
         </div>
-        <For each={postsList()}>
-          {([id, post]) => (
-            <PostMiniature
-              post={post}
-              selected={(() => selectedPostId() === id)()}
-            />
-          )}
-        </For>
       </Show>
     </aside>
   );
@@ -300,7 +304,7 @@ export default function Blog() {
           minimalPost,
         }}
       >
-        <div class="flex relative overflow-y-hidden h-full">
+        <div class="flex relative overflow-hidden h-full">
           <SideBar />
           <Suspense>
             <Content />
