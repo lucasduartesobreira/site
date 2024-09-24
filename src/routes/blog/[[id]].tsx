@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from "@solidjs/router";
+import { ChevronsLeft, ChevronsRight } from "lucide-solid";
 import rehypeRaw from "rehype-raw";
 import {
   createSignal,
@@ -47,10 +48,11 @@ function PostMiniature(props: { post: Post; selected: boolean }) {
 
   return (
     <a
-      class={`text-foreground mx-2 rounded border-2 ${selectedColor()} transition-all ease-out duration-500 `}
+      class={`flex text-foreground mx-2 rounded border-2 ${selectedColor()} transition-all ease-out duration-500 `}
       href={`/blog/${post().id}`}
+      role="link"
     >
-      <div class="mx-2 my-1 min-w-64 max-h-24 max-w-sm break-all text-pretty line-clamp-3 overflow-hidden text-ellipsis">
+      <div class="mx-2 my-1 max-h-24 w-full break-all text-pretty line-clamp-3 overflow-hidden text-ellipsis">
         {post().title}
       </div>
     </a>
@@ -63,10 +65,45 @@ function SideBar() {
   const posts = createMemo(() => postsCtx.posts);
 
   const postsList = createMemo(() => Array.from(posts().entries()));
+  const [open, setSideBarOpen] = createSignal(true);
+
+  const openOrCloseStyle = () =>
+    open() ? "min-w-72 lg:max-w-sm" : "min-w-6 max-w-6 [&_a]:hidden";
 
   return (
-    <aside class="flex flex-col p-2 gap-2 border-r-2 border-tertiary50 min-w-max mr-4 h-full mb-1 font-titillium font-regular">
-      <Show when={postsList().length > 0} fallback={<div>{"No posts"}</div>}>
+    <aside
+      class={`flex flex-col p-2 gap-2 border-r-2 border-tertiary50 mr-4 h-full mb-1 font-titillium font-regular relative transition-all ease-out duration-500 ${openOrCloseStyle()} `}
+    >
+      <Show
+        when={postsList().length > 0}
+        fallback={
+          <div class="text-foreground mx-2 rounded border-2 max-h-24 border-transparent transition-all ease-out duration-500">
+            {"No posts"}
+          </div>
+        }
+      >
+        <div class="absolute -right-2 translate-x-full">
+          <button
+            class={`${open() ? "hidden" : ""} flex items-center justify-center self-center w-8 h-8 hover:border-2 hover:border-primary text-primary rounded-md select:bg-tertiary50 transition-all ease-out`}
+            onClick={(e) => {
+              setSideBarOpen(true);
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+          >
+            <ChevronsRight />
+          </button>
+          <button
+            class={`${!open() ? "hidden" : ""} flex items-center justify-center self-center w-8 h-8 hover:border-2 hover:border-primary text-primary rounded-md select:bg-tertiary50 transition-all ease-out`}
+            onClick={(e) => {
+              setSideBarOpen(false);
+              e.preventDefault();
+              e.stopPropagation();
+            }}
+          >
+            <ChevronsLeft />
+          </button>
+        </div>
         <For each={postsList()}>
           {([id, post]) => (
             <PostMiniature
@@ -182,9 +219,12 @@ function Content() {
 }
 
 const fetchAllPosts = async (): Promise<Array<[PostId, Post]>> => {
-  const fetched = await fetch(`http://localhost:5173/api/posts/all`, {
-    method: "GET",
-  });
+  const fetched = await fetch(
+    `${process.env.API_URL ?? "http://localhost:5173"}/api/posts/all`,
+    {
+      method: "GET",
+    },
+  );
 
   const result: Array<Post> = await fetched.json();
 
@@ -200,7 +240,7 @@ const fetchPost = async (
   if (!Number.isSafeInteger(selectedPostId)) return [];
 
   const fetched = await fetch(
-    `http://localhost:5173/api/posts/${selectedPostId}`,
+    `${process.env.API_URL ?? "http://localhost:5173"}/api/posts/${selectedPostId}`,
     {
       method: "GET",
     },
