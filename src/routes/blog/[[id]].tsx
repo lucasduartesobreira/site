@@ -39,19 +39,20 @@ const PostControlCtx = createContext<{
 
 function PostMiniature(props: { post: Post; selected: boolean }) {
   const post = createMemo(() => props.post);
-  const selectedColor = createMemo(
-    () =>
-      props.selected
-        ? "border-tertiary border-2 opacity-100"
-        : "border-background",
+  const selectedColor = createMemo(() =>
+    props.selected
+      ? "border-primary border-2 opacity-100 text-primary font-semibold"
+      : "border-background",
   );
 
   return (
     <a
-      class={`text-gray-700 px-2 mx-2 py-1 rounded border-2 transition-all ease-out duration-500 ${selectedColor()}`}
+      class={`text-foreground mx-2 rounded border-2 ${selectedColor()} transition-all ease-out duration-500 `}
       href={`/blog/${post().id}`}
     >
-      {post().title}
+      <div class="mx-2 my-1 min-w-64 max-h-24 max-w-sm break-all text-pretty line-clamp-3 overflow-hidden text-ellipsis">
+        {post().title}
+      </div>
     </a>
   );
 }
