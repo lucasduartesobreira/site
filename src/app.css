@@ -45,6 +45,12 @@ body {
   margin: 0;
 }
 
+@layer base {
+  body {
+    @apply bg-background text-foreground font-titillium
+  }
+}
+
 @layer utilities {
   .scrollbar::-webkit-scrollbar {
     width: 12px;
