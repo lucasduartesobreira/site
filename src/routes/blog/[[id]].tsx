@@ -69,11 +69,13 @@ function SideBar() {
 
   const openOrCloseStyle = () =>
     open()
-      ? "md:min-w-72 md:max-w-sm max-md:grow"
-      : "max-md:min-w-2 max-md:max-w-2 md:min-w-6 md:max-w-6 [&_a]:hidden";
+      ? "md:min-w-72 md:max-w-sm max-md:w-full max-md:grow"
+      : "max-md:w-2 md:min-w-2 md:max-w-6 [&_a]:hidden";
 
   return (
-    <aside class={`flex ${open() ? "max-md:min-w-full" : "min-w-max"} gap-1`}>
+    <aside
+      class={`flex transition-all ease-out duration-1000 ${open() ? "max-md:min-w-full" : "max-md:min-w-[57px]"} gap-1`}
+    >
       <Show
         when={postsList().length > 0}
         fallback={
@@ -83,7 +85,7 @@ function SideBar() {
         }
       >
         <ul
-          class={`flex flex-col p-2 gap-2 border-r-2 border-tertiary50 h-full mb-1 font-regular transition-all ease-out duration-500 ${openOrCloseStyle()} `}
+          class={`flex flex-col p-2 gap-2 border-r-2 border-tertiary50 h-full mb-1 font-regular transition-all transition-width ease-out duration-1000 ${openOrCloseStyle()} `}
         >
           <For each={postsList()}>
             {([id, post]) => (
@@ -94,7 +96,7 @@ function SideBar() {
             )}
           </For>
         </ul>
-        <div class="h-full min-w-max max-w-max grow-0 shrink-0 flex items-start">
+        <div class="self-justify-start h-full min-w-max max-w-max grow-0 shrink-0 flex items-start mr-1">
           <button
             class={`${open() ? "hidden" : ""} flex items-center justify-center self-center w-8 h-8 hover:border-2 hover:border-primary text-primary rounded-md select:bg-tertiary50 transition-all ease-out`}
             onClick={(e) => {
