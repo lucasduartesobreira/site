@@ -51,7 +51,7 @@ function SocialMediaLink(props: { kind: SocialMediaKinds }) {
 
 function BasicInfo() {
   return (
-    <div class="p-8 rounded-xl mt-auto mb-auto transition-all ease-out snap-center">
+    <div class="animate-appear p-8 rounded-xl mt-auto mb-auto transition-all ease-out snap-center">
       <h1 class="text-6xl text-primary font-bold font-titillium uppercase mt-4 mb-2">
         Lucas Duarte
       </h1>
@@ -113,7 +113,7 @@ function Folder() {
   );
 
   return (
-    <div class="w-full h-full flex flex-col snap-start">
+    <div class="animate-slideIn w-full h-full flex flex-col snap-start">
       <nav class="">
         <ul class="h-[24px] mt-1 flex flex-row w-full gap-3 text-sm">
           <FolderTab

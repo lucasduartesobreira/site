@@ -25,6 +25,20 @@ module.exports = {
         titillium: ["Titillium Web", "sans-serif"],
         jetbrains: ["JetBrains Mono", "sans-serif"],
       },
+      keyframes: {
+        slideIn: {
+          "0%": { opacity: 0, transform: "translateX(60%)" },
+          "100%": { opacity: 100, transform: "translateX(0)" },
+        },
+        appearme: {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 100 },
+        },
+      },
+      animation: {
+        slideIn: "slideIn 0.5s ease-in-out forwards",
+        appear: "appearme 0.5s ease-in-out forwards",
+      },
     },
   },
   plugins: [],
