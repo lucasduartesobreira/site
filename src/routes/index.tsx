@@ -100,8 +100,17 @@ function FolderTab(props: {
 }
 
 function FolderPaper(props: PropsWithChildren) {
+  const selectPaper = () => {
+    document
+      .getElementById("folder")
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
   return (
-    <div class="h-full w-full rounded-[1px] focus-within:drop-shadow-[2px_2px_6px_rgba(0,0,0,0.2)] hover:drop-shadow-[2px_2px_6px_rgba(0,0,0,0.4)] py-2 px-4 bg-background-50 z-[1000] overflow-y-auto scrollbar text-justify flex flex-col transition-all ease-out opacity-100 rotate-[0.8deg] focus-within:rotate-[0.25deg] hover:rotate-[0.25deg]">
+    <div
+      class={`h-full w-full rounded-[1px] drop-shadow-[2px_2px_6px_rgba(0,0,0,0.2)] focus-within:drop-shadow-[2px_2px_6px_rgba(0,0,0,0.4)] hover:drop-shadow-[2px_2px_6px_rgba(0,0,0,0.4)] py-2 px-4 bg-background-50 z-[1000] overflow-y-auto scrollbar text-justify flex flex-col transition-all ease-out opacity-100 rotate-[0.8deg] focus-within:rotate-[0.25deg] hover:rotate-[0.25deg] `}
+      onscroll={selectPaper}
+      tabindex={0}
+    >
       {props.children}
     </div>
   );
@@ -113,7 +122,13 @@ function Folder() {
   );
 
   return (
-    <div class="animate-slideIn w-full h-full flex flex-col snap-start">
+    <div
+      class="animate-slideIn w-full h-full flex flex-col snap-start"
+      onclick={(e) => {
+        e.currentTarget.scrollIntoView({ behavior: "smooth", block: "start" });
+      }}
+      id="folder"
+    >
       <nav class="">
         <ul class="h-[24px] mt-1 flex flex-row w-full gap-3 text-sm">
           <FolderTab
