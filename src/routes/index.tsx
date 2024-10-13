@@ -13,7 +13,7 @@ import {
   For,
   JSXElement,
   Match,
-  PropsWithChildren,
+  ParentProps,
   Switch,
 } from "solid-js";
 import Summary from "~/components/Summary";
@@ -100,7 +100,7 @@ function FolderTab(props: {
   );
 }
 
-function FolderPaper(props: PropsWithChildren) {
+function FolderPaper(props: ParentProps) {
   const selectPaper = () => {
     document
       .getElementById("folder")
