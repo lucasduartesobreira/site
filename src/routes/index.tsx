@@ -101,7 +101,7 @@ function FolderTab(props: {
 
 function FolderPaper(props: PropsWithChildren) {
   return (
-    <div class="h-full w-full rounded-[1px] drop-shadow-[2px_2px_12px_rgba(0,0,0,0.1)] p-2 bg-background-50 z-[1000] overflow-y-auto scrollbar">
+    <div class="h-full w-full rounded-[1px] focus-within:drop-shadow-[2px_2px_6px_rgba(0,0,0,0.2)] hover:drop-shadow-[2px_2px_6px_rgba(0,0,0,0.4)] py-2 px-4 bg-background-50 z-[1000] overflow-y-auto scrollbar text-justify flex flex-col transition-all ease-out opacity-100 rotate-[0.8deg] focus-within:rotate-[0.25deg] hover:rotate-[0.25deg]">
       {props.children}
     </div>
   );
