@@ -207,16 +207,19 @@ function Content() {
   const { selectedPost, minimalPost: minimalPost } = useContext(PostControlCtx);
 
   return (
-    <main class="text-center mx-auto font-montserrat text-foreground p-4 overflow-y-auto">
+    <main class="text-center mx-auto md:max-w-[70%] font-montserrat text-foreground p-4 overflow-y-auto">
       <article>
-        <h1 class="max-6-xs text-6xl text-primary font-semibold font-titillium uppercase my-16">
+        <h1 class="max-6-xs text-5xl text-primary font-bold font-titillium uppercase mt-8">
           {minimalPost()?.title}
         </h1>
-        <p class="mt-8">{minimalPost()?.summary}</p>
+        <p class="mt-2 mb-6 text-base italic text-foreground/80">
+          {minimalPost()?.summary}
+        </p>
         <Suspense fallback="Loading...">
           <SolidMarkdown
             children={selectedPost()?.content}
             rehypePlugins={[rehypeRaw]}
+            class="text-justify gap-1 text-foreground"
           ></SolidMarkdown>
         </Suspense>
       </article>
