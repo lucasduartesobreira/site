@@ -82,7 +82,7 @@ function FolderTab(props: {
 
   return (
     <li
-      class={`inline-flex justify-center items-center font-medium italic text-xs bg-tertiary50 pl-1 pr-2 rounded-t-md ${borderColor()} border-t-2 border-x-2 transition-all ease-out ${activeZIndex()} relative`}
+      class={`inline-flex justify-center items-center font-medium italic text-xs bg-tertiary50 pl-1 pr-2 rounded-t-md ${borderColor()} border-t-2 border-x-2 transition-all ease-out ${activeZIndex()} relative focus-within:drop-shadow-[2px_-2px_4px_rgba(0,0,0,0.1)] hover:drop-shadow-[2px_-2px_4px_rgba(0,0,0,0.1)]`}
     >
       <div class="h-1 w-full absolute -bottom-1 left-0 bg-tertiary50 z-50" />
       <div
