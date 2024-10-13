@@ -15,4 +15,15 @@ export default [
   },
   { languageOptions: { globals: globals.node } },
   eslint_plugin_prettier,
+  {
+    rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+        },
+      ],
+    },
+  },
 ];
