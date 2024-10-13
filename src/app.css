@@ -53,25 +53,26 @@ body {
 
 @layer utilities {
   .scrollbar::-webkit-scrollbar {
-    width: 12px;
-    height: 12px;
+    width: 16px;
   }
 
   .scrollbar::-webkit-scrollbar-track {
     border-radius: 100vh;
     background: hsl(var(--background));
+    border-radius: 9999px;
   }
 
   .scrollbar::-webkit-scrollbar-thumb {
     background: hsl(var(--tertiary) / 50%);
-    /*background: #e0cbcb;*/
-    height: 12px;
-    max-height:24px;
     border-radius: 9999px;
-    /*border: 1px solid hsl(var(--tertiary) / 50%);*/
+    width: 12px;
+    border: 4px solid hsl(var(--background));
+    transition: all 1s;
+    background-clip: padding-box;
   }
 
   .scrollbar::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--tertiary));
+    border: 2px solid hsl(var(--background));
   }
 }
