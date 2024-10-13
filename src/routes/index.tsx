@@ -56,7 +56,7 @@ function BasicInfo() {
         Lucas Duarte
       </h1>
       <h2 class="font-regular text-4xl text-secondary mb-4">
-        Backend Developer
+        Full-Stack Developer
       </h2>
       <div class="flex w-full justify-center gap-2 my-2">
         <For each={Object.keys(links) as SocialMediaKinds[]}>
