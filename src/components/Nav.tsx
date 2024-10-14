@@ -29,11 +29,6 @@ export default function Nav() {
           >
             <a href="/">About</a>
           </li>
-          <li
-            class={`border-b-2 ${active("/blog")} mx-1.5 sm:mx-6 transition-all ease-out ${beautifulHover}`}
-          >
-            <a href="/blog">Blog</a>
-          </li>
         </ul>
       </nav>
     </header>

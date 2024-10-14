@@ -142,14 +142,6 @@ function Folder() {
             setActiveTab={() => setActiveTab("summary")}
           />
           <FolderTab
-            active={activeTab() === "journey"}
-            text="JOURNEY"
-            zIndex={
-              activeTab() === "journey" ? "z-30 opacity-100" : "z-10 opacity-90"
-            }
-            setActiveTab={() => setActiveTab("journey")}
-          />
-          <FolderTab
             active={false}
             text="SECRETS"
             zIndex="z-[9] opacity-85"
