@@ -1,3 +1,4 @@
+import { Link, Meta, Title } from "@solidjs/meta";
 import {
   Github,
   Linkedin,
@@ -178,9 +179,18 @@ function Journey() {
 
 export default function About() {
   return (
-    <main class="flex max-md:flex-wrap items-center justify-center gap-4 text-center w-full h-full mx-auto font-montserrat font-regular text-foreground/80 p-4 overflow-x-hidden overflow-y-auto scrollbar max-md:snap-y max-md:snap-proximity max-md:snap-always scroll-mr-2">
-      <BasicInfo />
-      <Folder />
-    </main>
+    <>
+      <Title>Home</Title>
+      <Meta name="description">
+        Lucas Duarte is a Full-Stack Software Engineer who loves crafting
+        performant, scalable, and maintainable solutions using technologies like
+        Node.js, Python, Rust, and React, driven by a passion for competition
+        and continuous improvement.
+      </Meta>
+      <main class="flex max-md:flex-wrap items-center justify-center gap-4 text-center w-full h-full mx-auto font-montserrat font-regular text-foreground/80 p-4 overflow-x-hidden overflow-y-auto scrollbar max-md:snap-y max-md:snap-proximity max-md:snap-always scroll-mr-2">
+        <BasicInfo />
+        <Folder />
+      </main>
+    </>
   );
 }

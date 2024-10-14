@@ -1,3 +1,4 @@
+import { Title } from "@solidjs/meta";
 import { useNavigate, useParams } from "@solidjs/router";
 import { ChevronsLeft, ChevronsRight } from "lucide-solid";
 import rehypeRaw from "rehype-raw";
@@ -309,6 +310,7 @@ export default function Blog() {
           minimalPost,
         }}
       >
+        <Title>Blog</Title>
         <div class="flex relative overflow-hidden h-full">
           <SideBar />
           <Suspense>
