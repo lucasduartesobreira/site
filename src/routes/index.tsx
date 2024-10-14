@@ -17,6 +17,7 @@ import {
   ParentProps,
   Switch,
 } from "solid-js";
+import Journey from "~/components/Journey";
 import Summary from "~/components/Summary";
 
 const links = {
@@ -171,10 +172,6 @@ function Folder() {
       </div>
     </div>
   );
-}
-
-function Journey() {
-  return <p>Journey</p>;
 }
 
 export default function About() {
