@@ -136,14 +136,13 @@ function Description(props: ParentProps) {
 function DescriptionButton(props: ParentProps) {
   const [isOpen, setOpen] = useDescription();
   return (
-    <button
-      class="flex justify-center items-center"
-      onclick={() => setOpen((open) => !open)}
-    >
+    <button class="flex gap-2" onclick={() => setOpen((open) => !open)}>
       {props.children}
-      <Show when={isOpen()} fallback={<ChevronDown size={16} />}>
-        <ChevronUp size={16} />
-      </Show>
+      <div class="self-center flex justify-center items-center">
+        <Show when={isOpen()} fallback={<ChevronDown size={16} />}>
+          <ChevronUp size={16} />
+        </Show>
+      </div>
     </button>
   );
 }
@@ -172,10 +171,11 @@ export default function Journey() {
         </Section>
         <Section type="last">
           <HighlightParagraph>
-            <span class="flex gap-2">
-              {"Back-end Developer - Free Lancer - 2022 - 2022"}
-              <DescriptionButton></DescriptionButton>
-            </span>
+            <DescriptionButton>
+              <span class="flex items-center">
+                {"Back-end Developer - Free Lancer - 2022 - 2022"}
+              </span>
+            </DescriptionButton>
             <Description>
               Description Description Description Description Description
               Description Description Description Description Description
