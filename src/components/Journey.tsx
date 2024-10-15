@@ -33,7 +33,7 @@ function HighlightParagraph(props: ParentProps<ComponentProps<"p">>) {
 
   return (
     <p
-      class={`py-2 hover:font-semibold transition-all ease-out text-pretty ${className}`}
+      class={`py-2 group-hover/exp:font-semibold transition-all ease-out text-pretty ${className}`}
     >
       {c()}
     </p>
@@ -43,8 +43,8 @@ function HighlightParagraph(props: ParentProps<ComponentProps<"p">>) {
 function LeftSideIconContainer(props: ParentProps) {
   const c = children(() => props.children);
   return (
-    <div class="self-center max-w-min min-w-min min-h-min h-full flex justify-center items-center overflow-hidden">
-      <div class="w-4 h-4 min-w-4 min-h-4 rounded-full border-2 border-tertiary relative">
+    <div class="self-center max-w-min min-w-min min-h-min h-full flex justify-center items-center overflow-hidden ">
+      <div class="w-4 h-4 min-w-4 min-h-4 rounded-full border-2 border-tertiary relative group-hover/exp:border-3 group-hover/exp:drop-shadow-[0px_0px_1px_rgba(0,0,0,0.2)] group-hover/exp:bg-tertiary transition-all ease-out">
         {c()}
       </div>
     </div>
@@ -92,7 +92,7 @@ function Section(props: ParentProps<{ type: "first" | "middle" | "last" }>) {
   const c = children(() => props.children);
   const typeOfSection = createMemo(() => props.type);
   return (
-    <section class="flex items-center gap-2">
+    <section class="flex items-center gap-2 group/exp">
       <Switch>
         <Match when={typeOfSection() === "first"}>
           <LeftSideIconFirst />
