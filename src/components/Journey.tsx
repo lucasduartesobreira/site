@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronUp } from "lucide-solid";
+import { ArrowRight, ChevronDown, ChevronUp } from "lucide-solid";
 import {
   children,
   ComponentProps,
@@ -9,7 +9,6 @@ import {
   ParentProps,
   Show,
   Signal,
-  Suspense,
   Switch,
   useContext,
 } from "solid-js";
@@ -124,7 +123,7 @@ function Description(props: ParentProps) {
   const c = children(() => props.children);
   return (
     <div
-      class={`flex gap-1 grow-0 group/description transition-all ease-out duration-1000 ${isOpen() ? "grow-0" : ""}`}
+      class={`flex gap-1 group/description transition-all ease-out duration-75`}
     >
       <div class="grow">
         <Show when={isOpen()}>{c()}</Show>
@@ -136,14 +135,51 @@ function Description(props: ParentProps) {
 function DescriptionButton(props: ParentProps) {
   const [isOpen, setOpen] = useDescription();
   return (
-    <button class="flex gap-2" onclick={() => setOpen((open) => !open)}>
+    <button
+      class="flex gap-2 items-start"
+      onclick={() => setOpen((open) => !open)}
+    >
       {props.children}
-      <div class="self-center flex justify-center items-center">
+      <div class="w-6 h-6 self-start flex justify-center items-center">
         <Show when={isOpen()} fallback={<ChevronDown size={16} />}>
           <ChevronUp size={16} />
         </Show>
       </div>
     </button>
+  );
+}
+
+function ShowDate(props: { start: string; end: string }) {
+  return (
+    <span class="flex gap-2 max-w-min items-center">
+      {props.start}
+      <ArrowRight class="self-center" size={16} />
+      {props.end}
+    </span>
+  );
+}
+
+function JobTitleAndCompany(props: { jobTitle: string; company: string }) {
+  return (
+    <span class="flex flex-col items-start">
+      <span class="flex flex-wrap items-center shrink-0">{props.jobTitle}</span>
+      <span class="flex items-center shrink-0 text-sm">{props.company}</span>
+    </span>
+  );
+}
+
+function ExperienceHeader(props: {
+  jobTitle: string;
+  company: string;
+  start: string;
+  end: string | "Present";
+}) {
+  return (
+    <DescriptionButton>
+      <JobTitleAndCompany jobTitle={props.jobTitle} company={props.company} />
+      {" - "}
+      <ShowDate start={props.start} end={props.end} />
+    </DescriptionButton>
   );
 }
 
@@ -156,26 +192,23 @@ export default function Journey() {
       <div class="font-regular flex flex-col text-left text-justify text-pretty">
         <Section type="first">
           <HighlightParagraph>
-            <DescriptionButton>
-              <span class="flex gap-2 items-center">
-                {"Full Stack Developer - Free Lancer - 2023 - Present"}
-              </span>
-            </DescriptionButton>
-            <Description>
-              Description Description Description Description Description
-              Description Description Description Description Description
-              Description Description Description Description Description
-              Description Description Description Description
-            </Description>
+            <ExperienceHeader
+              jobTitle="Full Stack Developer"
+              company="Free Lancer"
+              start="01/2023"
+              end="Present"
+            />
+            <Description>Really good Description</Description>
           </HighlightParagraph>
         </Section>
         <Section type="last">
           <HighlightParagraph>
-            <DescriptionButton>
-              <span class="flex items-center">
-                {"Back-end Developer - Free Lancer - 2022 - 2022"}
-              </span>
-            </DescriptionButton>
+            <ExperienceHeader
+              jobTitle="Back-end Developer"
+              company="Tindin Educação LTDA"
+              start="03/2022"
+              end="11/2022"
+            />
             <Description>
               Description Description Description Description Description
               Description Description Description Description Description
