@@ -136,13 +136,16 @@ function ExperienceToggleDescription(props: ParentProps) {
   const [isOpen, setOpen] = useExperience();
   return (
     <button
-      class="flex gap-2 items-start"
+      class="flex flex-wrap gap-1 items-start"
       onclick={() => setOpen((open) => !open)}
     >
       {props.children}
-      <div class="w-6 h-6 self-start flex justify-center items-center">
-        <Show when={isOpen()} fallback={<ChevronDown size={16} />}>
-          <ChevronUp size={16} />
+      <div class="w-6 h-6 text-primary self-start flex justify-center items-center">
+        <Show
+          when={isOpen()}
+          fallback={<ChevronDown size={16} strokeWidth={3} />}
+        >
+          <ChevronUp size={16} strokeWidth={3} />
         </Show>
       </div>
     </button>
@@ -163,7 +166,9 @@ function JobTitleAndCompany(props: { jobTitle: string; company: string }) {
   return (
     <span class="flex flex-col items-start">
       <span class="flex flex-wrap items-center shrink-0">{props.jobTitle}</span>
-      <span class="flex items-center shrink-0 text-sm">{props.company}</span>
+      <span class="flex flex-wrap items-center shrink-0 text-sm">
+        {props.company}
+      </span>
     </span>
   );
 }
