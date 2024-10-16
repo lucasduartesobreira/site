@@ -13,7 +13,7 @@ import {
   useContext,
 } from "solid-js";
 
-function HighlightParagraph(props: ParentProps<ComponentProps<"p">>) {
+function Experience(props: ParentProps<ComponentProps<"p">>) {
   const c = children(() => props.children);
   const className = () => props.class;
 
@@ -77,7 +77,7 @@ function LeftSideIconLast() {
 function Section(props: ParentProps<{ type: "first" | "middle" | "last" }>) {
   const typeOfSection = createMemo(() => props.type);
   return (
-    <DescriptionContainer>
+    <ExperienceContainer>
       <section class="flex gap-2 group/exp">
         <Switch>
           <Match when={typeOfSection() === "first"}>
@@ -92,13 +92,13 @@ function Section(props: ParentProps<{ type: "first" | "middle" | "last" }>) {
         </Switch>
         {props.children}
       </section>
-    </DescriptionContainer>
+    </ExperienceContainer>
   );
 }
 
 const IsDescriptionOpen = createContext<Signal<boolean>>();
 
-function DescriptionContainer(props: ParentProps) {
+function ExperienceContainer(props: ParentProps) {
   const signal = createSignal(true);
 
   return (
@@ -108,7 +108,7 @@ function DescriptionContainer(props: ParentProps) {
   );
 }
 
-function useDescription() {
+function useExperience() {
   const isOpenContext = useContext(IsDescriptionOpen);
 
   if (isOpenContext == undefined) {
@@ -118,8 +118,8 @@ function useDescription() {
   return isOpenContext;
 }
 
-function Description(props: ParentProps) {
-  const [isOpen] = useDescription();
+function ExperienceDescription(props: ParentProps) {
+  const [isOpen] = useExperience();
   const c = children(() => props.children);
   return (
     <div
@@ -132,8 +132,8 @@ function Description(props: ParentProps) {
   );
 }
 
-function DescriptionButton(props: ParentProps) {
-  const [isOpen, setOpen] = useDescription();
+function ExperienceToggleDescription(props: ParentProps) {
+  const [isOpen, setOpen] = useExperience();
   return (
     <button
       class="flex gap-2 items-start"
@@ -175,11 +175,11 @@ function ExperienceHeader(props: {
   end: string | "Present";
 }) {
   return (
-    <DescriptionButton>
+    <ExperienceToggleDescription>
       <JobTitleAndCompany jobTitle={props.jobTitle} company={props.company} />
       {" - "}
       <ShowDate start={props.start} end={props.end} />
-    </DescriptionButton>
+    </ExperienceToggleDescription>
   );
 }
 
@@ -191,31 +191,33 @@ export default function Journey() {
       </h2>
       <div class="font-regular flex flex-col text-left text-justify text-pretty">
         <Section type="first">
-          <HighlightParagraph>
+          <Experience>
             <ExperienceHeader
               jobTitle="Full Stack Developer"
               company="Free Lancer"
               start="01/2023"
               end="Present"
             />
-            <Description>Really good Description</Description>
-          </HighlightParagraph>
+            <ExperienceDescription>
+              Really good Description
+            </ExperienceDescription>
+          </Experience>
         </Section>
         <Section type="last">
-          <HighlightParagraph>
+          <Experience>
             <ExperienceHeader
               jobTitle="Back-end Developer"
               company="Tindin Educação LTDA"
               start="03/2022"
               end="11/2022"
             />
-            <Description>
+            <ExperienceDescription>
               Description Description Description Description Description
               Description Description Description Description Description
               Description Description Description Description Description
               Description Description Description Description
-            </Description>
-          </HighlightParagraph>
+            </ExperienceDescription>
+          </Experience>
         </Section>
       </div>
     </>
