@@ -199,7 +199,47 @@ export default function Journey() {
               end="Present"
             />
             <ExperienceDescription>
-              Really good Description
+              <p>
+                - Responsible for identifying and resolving production bugs
+                without prior knowledge of the project, achieving a 99% success
+                rate, and ensuring rapid system stability.
+              </p>
+              <p>
+                - Responsible for implementing integrations with various
+                third-party APIs, such as Google Maps and payment APIs,
+                optimizing data flow and interaction between external systems.
+              </p>
+              <p>
+                - Developed robust CI/CD pipelines using Terraform and Docker,
+                automating deployment across multiple environments, which
+                resulted in reduced delivery times and minimized manual errors.
+              </p>
+              <p>
+                - Wrote unit and integration tests using Jest, Vitest, and
+                Pytest to ensure code reliability and maintain high test
+                coverage, enabling smooth deployments and quick bug
+                identification during development.
+              </p>
+              <p>
+                - Created high-performance and scalable REST APIs using Node.js,
+                Express.js, NestJS, FastAPI, and Python, with databases such as
+                MongoDB, PostgreSQL, RedShift, DynamoDB, and SQLite.{" "}
+              </p>
+              <p>
+                - Experienced with AWS integrations, including SQS, Lambda,
+                CloudWatch, EC2, S3, and ECS, providing efficient and
+                cost-effective solutions for data storage and processing.
+              </p>
+              <p>
+                - Developed responsive and optimized web interfaces using
+                React.js, Next.js, and Solid.js, utilizing Tailwind, CSS, HTML,
+                and Styled Components for styling.{" "}
+              </p>
+              <p>
+                - Implemented IndexedDB for offline support and managed
+                application state with Context API and React Query, ensuring a
+                smooth and interactive user experience.
+              </p>
             </ExperienceDescription>
           </Experience>
         </Section>
@@ -212,10 +252,50 @@ export default function Journey() {
               end="11/2022"
             />
             <ExperienceDescription>
-              Description Description Description Description Description
-              Description Description Description Description Description
-              Description Description Description Description Description
-              Description Description Description Description
+              <p>
+                - Diagnosed system bottleneck, using MongoDB Atlas Analytics and
+                AWS CloudWatch, and improved it by fixing the database
+                connection over-usage that led to 99% uptime and improved
+                average response time;
+              </p>
+              <p>
+                - Co-led weekly Back-end team meetings, optimizing meeting time
+                and contributing to increased team satisfaction and
+                productivity.
+              </p>
+              <p>
+                - Designed and implemented a complete refactor of the
+                permissions system with zero downtime, enhancing flexibility in
+                account setting and decreasing support requests;
+              </p>
+              <p>
+                - Designed and implemented a custom script to migrate data from
+                the previous product to the new one;
+              </p>
+              <p>
+                - Wrote both unit and integration tests using Jest to ensure
+                code reliability and maintain high test coverage, enabling
+                smooth deployments and quick identification of bugs during
+                development;
+              </p>
+              <p>
+                - Fixed issues and finished functionalities using JavaScript,
+                Express.js, Jest, MongoDB, REST, AWS Lambda, AWS ECS, Git, and
+                GitLab in order to support the prior major project;
+              </p>
+              <p>
+                - Implemented and maintained multiple features for the new major
+                project using Typescript, REST, Jest, MongoDB, AWS Lambda, AWS
+                S3, AWS SQS, Git, GitHub, and GitLab;
+              </p>
+              <p>
+                - Helped coworkers with pair programming and code reviews to
+                promote a cooperative development atmosphere;
+              </p>
+              <p>
+                - Integrated the new system with multiple external platforms
+                using WebHooks' best practices.
+              </p>
             </ExperienceDescription>
           </Experience>
         </Section>
