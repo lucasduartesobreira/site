@@ -182,7 +182,7 @@ export default function About() {
         name="description"
         content="Lucas Duarte is a Full-Stack Software Engineer who loves crafting performant, scalable, and maintainable solutions using technologies like Node.js, Python, Rust, and React, driven by a passion for competition and continuous improvement."
       />
-      <main class="flex max-md:flex-wrap items-center justify-center gap-4 text-center w-full h-full mx-auto font-montserrat font-regular text-foreground/80 p-4 overflow-x-hidden overflow-y-auto scrollbar max-md:snap-y max-md:snap-proximity max-md:snap-always scroll-mr-2">
+      <main class="flex max-md:flex-wrap items-center justify-center gap-4 text-center w-full h-full mx-auto font-montserrat font-regular text-foreground/80 max-md:p-1 max-md:pl-2 md:p-4 overflow-x-hidden overflow-y-auto scrollbar max-md:snap-y max-md:snap-proximity max-md:snap-always scroll-mr-2">
         <BasicInfo />
         <Folder />
       </main>
