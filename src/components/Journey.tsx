@@ -99,7 +99,7 @@ function Section(props: ParentProps<{ type: "first" | "middle" | "last" }>) {
 const IsDescriptionOpen = createContext<Signal<boolean>>();
 
 function ExperienceContainer(props: ParentProps) {
-  const signal = createSignal(true);
+  const signal = createSignal(false);
 
   return (
     <IsDescriptionOpen.Provider value={signal}>
