@@ -230,7 +230,7 @@ function Content() {
 
 const fetchAllPosts = async (): Promise<Array<[PostId, Post]>> => {
   const fetched = await fetch(
-    `${process.env.API_URL ?? "http://localhost:5173"}/api/posts/all`,
+    `${import.meta.env.VITE_API_URL ?? "http://localhost:5173"}/api/posts/all`,
     {
       method: "GET",
     },
@@ -250,7 +250,7 @@ const fetchPost = async (
   if (!Number.isSafeInteger(selectedPostId)) return [];
 
   const fetched = await fetch(
-    `${process.env.API_URL ?? "http://localhost:5173"}/api/posts/${selectedPostId}`,
+    `${import.meta.env.VITE_API_URL ?? "http://localhost:5173"}/api/posts/${selectedPostId}`,
     {
       method: "GET",
     },

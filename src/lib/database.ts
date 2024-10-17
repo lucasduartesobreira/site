@@ -4,8 +4,9 @@ let database: Client | null = null;
 
 export const dbClient = () => {
   if (database == null) {
+    const url = process.env.DATABASE_URL ?? "file:data/local.db";
     database = createClient({
-      url: process.env.DATABASE_URL ?? "file://data/local.db",
+      url: url,
       authToken: process.env.AUTH_JWT_KEY,
     });
   }

@@ -123,10 +123,12 @@ function ExperienceDescription(props: ParentProps) {
   const c = children(() => props.children);
   return (
     <div
-      class={`flex gap-1 group/description transition-all ease-out duration-75`}
+      class={`flex text-sm gap-1 group/description transition-all ease-out duration-75`}
     >
       <div class="grow">
-        <Show when={isOpen()}>{c()}</Show>
+        <Show when={isOpen()}>
+          <div class="my-2 group-hover/exp:font-medium">{c()}</div>
+        </Show>
       </div>
     </div>
   );
@@ -136,7 +138,7 @@ function ExperienceToggleDescription(props: ParentProps) {
   const [isOpen, setOpen] = useExperience();
   return (
     <button
-      class="flex flex-wrap gap-1 items-start"
+      class="flex font-titillium flex-wrap gap-1 items-start"
       onclick={() => setOpen((open) => !open)}
     >
       {props.children}
@@ -165,8 +167,10 @@ function ShowDate(props: { start: string; end: string }) {
 function JobTitleAndCompany(props: { jobTitle: string; company: string }) {
   return (
     <span class="flex flex-col items-start">
-      <span class="flex flex-wrap items-center shrink-0">{props.jobTitle}</span>
-      <span class="flex flex-wrap items-center shrink-0 text-sm">
+      <span class="flex flex-wrap items-center shrink-0 ">
+        {props.jobTitle}
+      </span>
+      <span class="flex flex-wrap items-center shrink-0 text-sm ">
         {props.company}
       </span>
     </span>
