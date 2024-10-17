@@ -229,9 +229,12 @@ function Content() {
 }
 
 const fetchAllPosts = async (): Promise<Array<[PostId, Post]>> => {
-  const fetched = await fetch(`/api/posts/all`, {
-    method: "GET",
-  });
+  const fetched = await fetch(
+    `${process.env.API_URL ?? "http://localhost:5173"}/api/posts/all`,
+    {
+      method: "GET",
+    },
+  );
 
   const result: Array<Post> = await fetched.json();
 
@@ -246,9 +249,12 @@ const fetchPost = async (
 ): Promise<Array<[PostId, Post & PostContent]>> => {
   if (!Number.isSafeInteger(selectedPostId)) return [];
 
-  const fetched = await fetch(`/api/posts/${selectedPostId}`, {
-    method: "GET",
-  });
+  const fetched = await fetch(
+    `${process.env.API_URL ?? "http://localhost:5173"}/api/posts/${selectedPostId}`,
+    {
+      method: "GET",
+    },
+  );
 
   const result: Array<Post & PostContent> = await fetched.json();
 
