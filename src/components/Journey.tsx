@@ -344,7 +344,7 @@ export default function Journey() {
           <Experience>
             <ExperienceHeader
               jobTitle="Competitive Programmer"
-              company="Freelancer"
+              company="Student"
               start="2016"
               end="2018"
             />
