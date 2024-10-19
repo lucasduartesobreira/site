@@ -62,10 +62,17 @@ function BasicInfo() {
       <h2 class="font-regular text-4xl text-secondary mb-2">
         Full-Stack Developer
       </h2>
-      <div class="flex justify-center items-center gap-2 text-secondary font-titillium font-semibold text-lg mb-2 group">
+      <div
+        class="flex justify-center items-center gap-2 text-secondary font-titillium font-semibold text-lg mb-2 group"
+        tabIndex={1}
+      >
         <MapPin class="" size={16} strokeWidth={3} />
-        <span class="hidden group-hover:inline-block">Goiânia, Brazil</span>
-        <span class="inline-block group-hover:hidden">Brazil</span>
+        <span class="hidden group-hover:inline-block group-focus-within:inline-block">
+          Goiânia, State of Goiás, Brazil
+        </span>
+        <span class="inline-block group-hover:hidden group-focus-within:hidden">
+          Goiânia, Brazil
+        </span>
       </div>
       <div class="flex w-full justify-center gap-2 my-2">
         <For each={Object.keys(links) as SocialMediaKinds[]}>
