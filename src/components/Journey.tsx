@@ -348,7 +348,7 @@ export default function Journey() {
         <Section type="last">
           <Experience>
             <ExperienceHeader
-              jobTitle="Java Minecraft Developer"
+              jobTitle="Java Minecraft Plug-in Developer"
               company="Freelancer"
               start="2014"
               end="2015"
