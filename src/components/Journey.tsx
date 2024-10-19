@@ -316,6 +316,37 @@ export default function Journey() {
         <Section type="middle">
           <Experience>
             <ExperienceHeader
+              jobTitle="Computer Engineer"
+              company="Student"
+              start="2018"
+              end="Present"
+            />
+            <ExperienceDescription>
+              <ul class="p-2 rounded-md border border-foreground list-disc list-inside">
+                <li>
+                  Mastered core principles of computer systems and software
+                  engineering, with a strong foundation in algorithms, data
+                  structures, operating systems, and embedded systems design.
+                </li>
+                <li>
+                  Gained hands-on experience through practical projects,
+                  developing and optimizing software applications, building
+                  hardware prototypes, and integrating hardware-software
+                  solutions.
+                </li>
+                <li>
+                  Collaborated on team-based engineering challenges, applying
+                  critical problem-solving, communication, and teamwork skills
+                  to design, test, and implement innovative solutions in a
+                  variety of tech domains.
+                </li>
+              </ul>
+            </ExperienceDescription>
+          </Experience>
+        </Section>
+        <Section type="middle">
+          <Experience>
+            <ExperienceHeader
               jobTitle="Competitive Programmer"
               company="Freelancer"
               start="2016"
