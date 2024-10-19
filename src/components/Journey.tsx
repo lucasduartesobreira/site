@@ -313,6 +313,38 @@ export default function Journey() {
             </ExperienceDescription>
           </Experience>
         </Section>
+        <Section type="middle">
+          <Experience>
+            <ExperienceHeader
+              jobTitle="Competitive Programmer"
+              company="Freelancer"
+              start="2016"
+              end="2018"
+            />
+            <ExperienceDescription>
+              <ul class="list-disc list-inside">
+                <li>
+                  Sharpened problem-solving skills through algorithmic
+                  challenges, consistently tackling complex problems in data
+                  structures, dynamic programming, and graph theory to improve
+                  efficiency and solution speed.
+                </li>
+                <li>
+                  Developed a deep understanding of computational complexity,
+                  optimizing solutions by applying advanced algorithms, design
+                  patterns, and programming techniques to achieve optimal time
+                  and space complexity.
+                </li>
+                <li>
+                  Engaged in continuous learning and self-improvement, regularly
+                  solving coding challenges to stay proficient in key algorithms
+                  and data structures, ensuring readiness for real-world
+                  application and technical interviews.
+                </li>
+              </ul>
+            </ExperienceDescription>
+          </Experience>
+        </Section>
         <Section type="last">
           <Experience>
             <ExperienceHeader
