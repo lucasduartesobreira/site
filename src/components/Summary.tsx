@@ -42,7 +42,7 @@ export default function Summary() {
       </h2>
       <div class="font-regular flex flex-col gap-4 text-left text-justify text-pretty">
         <HighlightParagraph>
-          Driven by a <span class="text-red-600 font-medium">love</span> for
+          Driven by a <span class="text-red-700 font-medium">love</span> for
           problem-solving and competition, I’ve been immersed in software
           development since 2014. Whether it’s optimizing systems, crafting
           scalable APIs, or building intuitive interfaces, I thrive on tackling
