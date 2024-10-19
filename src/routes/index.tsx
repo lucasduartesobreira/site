@@ -4,6 +4,7 @@ import {
   Linkedin,
   LucideProps,
   Mail,
+  MapPin,
   Twitch,
   Twitter,
   Youtube,
@@ -58,9 +59,14 @@ function BasicInfo() {
       <h1 class="text-6xl text-primary font-bold font-titillium uppercase mt-4 mb-2">
         Lucas Duarte
       </h1>
-      <h2 class="font-regular text-4xl text-secondary mb-4">
+      <h2 class="font-regular text-4xl text-secondary mb-2">
         Full-Stack Developer
       </h2>
+      <div class="flex justify-center items-center gap-2 text-secondary font-titillium font-semibold text-lg mb-2 group">
+        <MapPin class="" size={16} strokeWidth={3} />
+        <span class="hidden group-hover:inline-block">Goiânia, Brazil</span>
+        <span class="inline-block group-hover:hidden">Brazil</span>
+      </div>
       <div class="flex w-full justify-center gap-2 my-2">
         <For each={Object.keys(links) as SocialMediaKinds[]}>
           {(data) => <SocialMediaLink kind={data} />}
