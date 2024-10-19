@@ -64,7 +64,7 @@ function BasicInfo() {
       </h2>
       <div
         class="flex justify-center items-center gap-2 text-secondary font-titillium font-semibold text-lg mb-2 group"
-        tabIndex={1}
+        tabIndex={0}
       >
         <MapPin class="" size={16} strokeWidth={3} />
         <span class="hidden group-hover:inline-block group-focus-within:inline-block">
