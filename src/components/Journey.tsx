@@ -207,7 +207,7 @@ export default function Journey() {
           <Experience>
             <ExperienceHeader
               jobTitle="Full Stack Developer"
-              company="Free Lancer"
+              company="Freelancer"
               start="01/2023"
               end="Present"
             />
