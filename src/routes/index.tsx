@@ -108,7 +108,10 @@ function FolderTab(props: {
           class={`absolute origin-top-left h-full w-[44px]  border-t-2 ${borderColor()} bg-tertiary50 transform rotate-[37deg] z-50`}
         />
       </div>
-      <button class="z-50" onClick={() => props.setActiveTab()}>
+      <button
+        class="z-50 text-foreground font-semibold"
+        onClick={() => props.setActiveTab()}
+      >
         {text().toUpperCase()}
       </button>
     </li>
