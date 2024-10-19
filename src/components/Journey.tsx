@@ -255,7 +255,7 @@ export default function Journey() {
             </ExperienceDescription>
           </Experience>
         </Section>
-        <Section type="last">
+        <Section type="middle">
           <Experience>
             <ExperienceHeader
               jobTitle="Back-end Developer"
@@ -308,6 +308,41 @@ export default function Journey() {
                 <li>
                   Integrated the new system with multiple external platforms
                   using WebHooks' best practices.
+                </li>
+              </ul>
+            </ExperienceDescription>
+          </Experience>
+        </Section>
+        <Section type="last">
+          <Experience>
+            <ExperienceHeader
+              jobTitle="Java Minecraft Developer"
+              company="Freelancer"
+              start="2014"
+              end="2015"
+            />
+            <ExperienceDescription>
+              <ul class="list-disc list-inside">
+                <li>
+                  Managed deployment and maintenance of Minecraft servers
+                  running Hunger Games and Mini Games, ensuring stable
+                  performance and quick issue resolution. Regular updates kept
+                  servers compatible with new versions.
+                </li>
+                <li>
+                  Developed and maintained mini-game plugins, creating custom
+                  game mechanics and fixing bugs based on player feedback to
+                  enhance the overall experience.
+                </li>
+                <li>
+                  Extended Hunger Games plugins by adding new features, updating
+                  to multiple Minecraft versions, and incorporating current
+                  trends, all while ensuring compatibility.
+                </li>
+                <li>
+                  Collaborated with developers and the community, prioritizing
+                  feature requests and continuously rolling out improvements
+                  based on player feedback.
                 </li>
               </ul>
             </ExperienceDescription>
