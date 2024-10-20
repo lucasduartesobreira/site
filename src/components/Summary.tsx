@@ -26,7 +26,7 @@ function HighlightParagraph(props: ParentProps<ComponentProps<"p">>) {
 
   return (
     <p
-      class={`hover:font-semibold transition-all ease-out text-pretty ${className}`}
+      class={`hover:font-semibold transition-all ease-out text-pretty ${className()}`}
     >
       {" "}
       {c()}
@@ -42,7 +42,7 @@ export default function Summary() {
       </h2>
       <div class="font-regular flex flex-col gap-4 text-left text-justify text-pretty">
         <HighlightParagraph>
-          Driven by a <span class="text-red-600 font-medium">love</span> for
+          Driven by a <span class="text-red-700 font-medium">love</span> for
           problem-solving and competition, I’ve been immersed in software
           development since 2014. Whether it’s optimizing systems, crafting
           scalable APIs, or building intuitive interfaces, I thrive on tackling
@@ -117,7 +117,13 @@ export default function Summary() {
               </li>
             </ul>
             <div class="min-w-max flex justify-center items-center md:mr-auto max-md:w-full">
-              <img src="https://skillicons.dev/icons?i=nodejs,ts,express,fastapi,rust,nestjs,react,nextjs,solidjs,tailwind,styledcomponents,mongodb,postgresql,sqlite,dynamodb,aws,docker,terraform,githubactions,python&perline=4" />
+              <img
+                src="/skills.svg"
+                width="216.75"
+                height="273"
+                alt="Technologies in which I have expertise include Node.js, TypeScript, Express.js, FastAPI, Rust, Nest.js, React.js, Next.js, Solid.js, Tailwind, Styled Components, MongoDB, PostgreSQL, SQLite, DynamoDB, AWS, Docker, Terraform, GitHub Actions, Python"
+                loading="lazy"
+              />
             </div>
           </div>
         </div>

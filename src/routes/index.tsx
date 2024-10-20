@@ -4,6 +4,7 @@ import {
   Linkedin,
   LucideProps,
   Mail,
+  MapPin,
   Twitch,
   Twitter,
   Youtube,
@@ -17,6 +18,7 @@ import {
   ParentProps,
   Switch,
 } from "solid-js";
+import Journey from "~/components/Journey";
 import Summary from "~/components/Summary";
 
 const links = {
@@ -57,9 +59,21 @@ function BasicInfo() {
       <h1 class="text-6xl text-primary font-bold font-titillium uppercase mt-4 mb-2">
         Lucas Duarte
       </h1>
-      <h2 class="font-regular text-4xl text-secondary mb-4">
+      <h2 class="font-regular text-4xl text-secondary mb-2">
         Full-Stack Developer
       </h2>
+      <div
+        class="flex justify-center items-center gap-2 text-secondary font-titillium font-semibold text-lg mb-2 group"
+        tabIndex={0}
+      >
+        <MapPin class="" size={16} strokeWidth={3} />
+        <span class="hidden group-hover:inline-block group-focus-within:inline-block">
+          Goiânia, State of Goiás, Brazil
+        </span>
+        <span class="inline-block group-hover:hidden group-focus-within:hidden">
+          Goiânia, Brazil
+        </span>
+      </div>
       <div class="flex w-full justify-center gap-2 my-2">
         <For each={Object.keys(links) as SocialMediaKinds[]}>
           {(data) => <SocialMediaLink kind={data} />}
@@ -94,7 +108,10 @@ function FolderTab(props: {
           class={`absolute origin-top-left h-full w-[44px]  border-t-2 ${borderColor()} bg-tertiary50 transform rotate-[37deg] z-50`}
         />
       </div>
-      <button class="z-50" onClick={() => props.setActiveTab()}>
+      <button
+        class="z-50 text-foreground font-semibold"
+        onClick={() => props.setActiveTab()}
+      >
         {text().toUpperCase()}
       </button>
     </li>
@@ -142,6 +159,14 @@ function Folder() {
             setActiveTab={() => setActiveTab("summary")}
           />
           <FolderTab
+            active={activeTab() === "journey"}
+            text="JOURNEY"
+            zIndex={
+              activeTab() === "journey" ? "z-30 opacity-100" : "z-10 opacity-90"
+            }
+            setActiveTab={() => setActiveTab("journey")}
+          />
+          <FolderTab
             active={false}
             text="SECRETS"
             zIndex="z-[9] opacity-85"
@@ -165,10 +190,6 @@ function Folder() {
   );
 }
 
-function Journey() {
-  return <p>Journey</p>;
-}
-
 export default function About() {
   return (
     <>
@@ -177,7 +198,7 @@ export default function About() {
         name="description"
         content="Lucas Duarte is a Full-Stack Software Engineer who loves crafting performant, scalable, and maintainable solutions using technologies like Node.js, Python, Rust, and React, driven by a passion for competition and continuous improvement."
       />
-      <main class="flex max-md:flex-wrap items-center justify-center gap-4 text-center w-full h-full mx-auto font-montserrat font-regular text-foreground/80 p-4 overflow-x-hidden overflow-y-auto scrollbar max-md:snap-y max-md:snap-proximity max-md:snap-always scroll-mr-2">
+      <main class="flex max-md:flex-wrap items-center justify-center gap-4 text-center w-full h-full mx-auto font-montserrat font-regular text-foreground/80 max-md:p-1 max-md:pl-2 md:p-4 overflow-x-hidden overflow-y-auto scrollbar max-md:snap-y max-md:snap-proximity max-md:snap-always scroll-mr-2">
         <BasicInfo />
         <Folder />
       </main>

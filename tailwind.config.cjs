@@ -23,7 +23,7 @@ module.exports = {
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],
         titillium: ["Titillium Web", "sans-serif"],
-        jetbrains: ["JetBrains Mono", "sans-serif"],
+        jetbrains: ["JetBrains Mono", "monospace"],
       },
       keyframes: {
         slideIn: {
@@ -41,5 +41,33 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addBase, config }) {
+      addBase({
+        "@font-face": [
+          {
+            fontFamily: "Titillium Web",
+            fontStyle: "normal",
+            fontWeight: "300 700",
+            src: "url(https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,300;0,400;0,600;0,700&display=swap)",
+            fontDisplay: "swap",
+          },
+          {
+            fontFamily: "Montserrat",
+            fontStyle: "normal",
+            fontWeight: "300 700",
+            src: "url(https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..700;1,300..700&display=swap)",
+            fontDisplay: "swap",
+          },
+          {
+            fontFamily: "JetBrains Mono",
+            fontStyle: "normal",
+            fontWeight: "300",
+            src: "url(https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;1,300&display=swap)",
+            fontDisplay: "swap",
+          },
+        ],
+      });
+    },
+  ],
 };
