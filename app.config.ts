@@ -11,6 +11,20 @@ export default defineConfig({
         algorithm: "gzip",
         ext: ".gz",
       }),
+      {
+        name: "set-cache-headers",
+        configureServer(server) {
+          server.middlewares.use((req, res, next) => {
+            if (req.url && new URL(req.url).pathname === "/skills.svg") {
+              res.setHeader(
+                "Cache-Control",
+                "public, max-age=31536000, immutable",
+              );
+            }
+            next();
+          });
+        },
+      },
     ],
   },
 });
