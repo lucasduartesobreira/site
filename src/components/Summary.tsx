@@ -26,7 +26,7 @@ function HighlightParagraph(props: ParentProps<ComponentProps<"p">>) {
 
   return (
     <p
-      class={`hover:font-semibold transition-all ease-out text-pretty ${className}`}
+      class={`hover:font-semibold transition-all ease-out text-pretty ${className()}`}
     >
       {" "}
       {c()}
