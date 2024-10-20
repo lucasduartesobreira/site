@@ -123,10 +123,16 @@ function ExperienceDescription(props: ParentProps) {
   const c = children(() => props.children);
   return (
     <div
-      class={`flex gap-1 group/description transition-all ease-out duration-75`}
+      class={`flex text-sm gap-1 group/description transition-all ease-out duration-75`}
     >
       <div class="grow">
-        <Show when={isOpen()}>{c()}</Show>
+        <Show when={isOpen()}>
+          <div class="my-2 group-hover/exp:font-medium">
+            <ul class="p-2 rounded-md border border-foreground list-disc list-inside">
+              {c()}
+            </ul>
+          </div>
+        </Show>
       </div>
     </div>
   );
@@ -136,7 +142,7 @@ function ExperienceToggleDescription(props: ParentProps) {
   const [isOpen, setOpen] = useExperience();
   return (
     <button
-      class="flex flex-wrap gap-1 items-start"
+      class="flex font-titillium flex-wrap gap-1 items-start"
       onclick={() => setOpen((open) => !open)}
     >
       {props.children}
@@ -165,8 +171,10 @@ function ShowDate(props: { start: string; end: string }) {
 function JobTitleAndCompany(props: { jobTitle: string; company: string }) {
   return (
     <span class="flex flex-col items-start">
-      <span class="flex flex-wrap items-center shrink-0">{props.jobTitle}</span>
-      <span class="flex flex-wrap items-center shrink-0 text-sm">
+      <span class="flex flex-wrap items-center shrink-0 ">
+        {props.jobTitle}
+      </span>
+      <span class="flex flex-wrap items-center shrink-0 text-sm ">
         {props.company}
       </span>
     </span>
@@ -199,56 +207,56 @@ export default function Journey() {
           <Experience>
             <ExperienceHeader
               jobTitle="Full Stack Developer"
-              company="Free Lancer"
+              company="Freelancer"
               start="01/2023"
               end="Present"
             />
             <ExperienceDescription>
-              <p>
-                - Responsible for identifying and resolving production bugs
+              <li>
+                Responsible for identifying and resolving production bugs
                 without prior knowledge of the project, achieving a 99% success
                 rate, and ensuring rapid system stability.
-              </p>
-              <p>
-                - Responsible for implementing integrations with various
+              </li>
+              <li>
+                Responsible for implementing integrations with various
                 third-party APIs, such as Google Maps and payment APIs,
                 optimizing data flow and interaction between external systems.
-              </p>
-              <p>
-                - Developed robust CI/CD pipelines using Terraform and Docker,
+              </li>
+              <li>
+                Developed robust CI/CD pipelines using Terraform and Docker,
                 automating deployment across multiple environments, which
                 resulted in reduced delivery times and minimized manual errors.
-              </p>
-              <p>
-                - Wrote unit and integration tests using Jest, Vitest, and
-                Pytest to ensure code reliability and maintain high test
-                coverage, enabling smooth deployments and quick bug
-                identification during development.
-              </p>
-              <p>
-                - Created high-performance and scalable REST APIs using Node.js,
+              </li>
+              <li>
+                Wrote unit and integration tests using Jest, Vitest, and Pytest
+                to ensure code reliability and maintain high test coverage,
+                enabling smooth deployments and quick bug identification during
+                development.
+              </li>
+              <li>
+                Created high-performance and scalable REST APIs using Node.js,
                 Express.js, NestJS, FastAPI, and Python, with databases such as
                 MongoDB, PostgreSQL, RedShift, DynamoDB, and SQLite.{" "}
-              </p>
-              <p>
-                - Experienced with AWS integrations, including SQS, Lambda,
+              </li>
+              <li>
+                Experienced with AWS integrations, including SQS, Lambda,
                 CloudWatch, EC2, S3, and ECS, providing efficient and
                 cost-effective solutions for data storage and processing.
-              </p>
-              <p>
-                - Developed responsive and optimized web interfaces using
+              </li>
+              <li>
+                Developed responsive and optimized web interfaces using
                 React.js, Next.js, and Solid.js, utilizing Tailwind, CSS, HTML,
                 and Styled Components for styling.{" "}
-              </p>
-              <p>
-                - Implemented IndexedDB for offline support and managed
+              </li>
+              <li>
+                Implemented IndexedDB for offline support and managed
                 application state with Context API and React Query, ensuring a
                 smooth and interactive user experience.
-              </p>
+              </li>
             </ExperienceDescription>
           </Experience>
         </Section>
-        <Section type="last">
+        <Section type="middle">
           <Experience>
             <ExperienceHeader
               jobTitle="Back-end Developer"
@@ -257,50 +265,141 @@ export default function Journey() {
               end="11/2022"
             />
             <ExperienceDescription>
-              <p>
-                - Diagnosed system bottleneck, using MongoDB Atlas Analytics and
+              <li>
+                Diagnosed system bottleneck, using MongoDB Atlas Analytics and
                 AWS CloudWatch, and improved it by fixing the database
                 connection over-usage that led to 99% uptime and improved
                 average response time;
-              </p>
-              <p>
-                - Co-led weekly Back-end team meetings, optimizing meeting time
+              </li>
+              <li>
+                Co-led weekly Back-end team meetings, optimizing meeting time
                 and contributing to increased team satisfaction and
                 productivity.
-              </p>
-              <p>
-                - Designed and implemented a complete refactor of the
-                permissions system with zero downtime, enhancing flexibility in
-                account setting and decreasing support requests;
-              </p>
-              <p>
-                - Designed and implemented a custom script to migrate data from
+              </li>
+              <li>
+                Designed and implemented a complete refactor of the permissions
+                system with zero downtime, enhancing flexibility in account
+                setting and decreasing support requests;
+              </li>
+              <li>
+                Designed and implemented a custom script to migrate data from
                 the previous product to the new one;
-              </p>
-              <p>
-                - Wrote both unit and integration tests using Jest to ensure
-                code reliability and maintain high test coverage, enabling
-                smooth deployments and quick identification of bugs during
-                development;
-              </p>
-              <p>
-                - Fixed issues and finished functionalities using JavaScript,
+              </li>
+              <li>
+                Wrote both unit and integration tests using Jest to ensure code
+                reliability and maintain high test coverage, enabling smooth
+                deployments and quick identification of bugs during development;
+              </li>
+              <li>
+                Fixed issues and finished functionalities using JavaScript,
                 Express.js, Jest, MongoDB, REST, AWS Lambda, AWS ECS, Git, and
                 GitLab in order to support the prior major project;
-              </p>
-              <p>
-                - Implemented and maintained multiple features for the new major
+              </li>
+              <li>
+                Implemented and maintained multiple features for the new major
                 project using Typescript, REST, Jest, MongoDB, AWS Lambda, AWS
                 S3, AWS SQS, Git, GitHub, and GitLab;
-              </p>
-              <p>
-                - Helped coworkers with pair programming and code reviews to
+              </li>
+              <li>
+                Helped coworkers with pair programming and code reviews to
                 promote a cooperative development atmosphere;
-              </p>
-              <p>
-                - Integrated the new system with multiple external platforms
-                using WebHooks' best practices.
-              </p>
+              </li>
+              <li>
+                Integrated the new system with multiple external platforms using
+                WebHooks' best practices.
+              </li>
+            </ExperienceDescription>
+          </Experience>
+        </Section>
+        <Section type="middle">
+          <Experience>
+            <ExperienceHeader
+              jobTitle="Computer Engineer"
+              company="Student"
+              start="2018"
+              end="Present"
+            />
+            <ExperienceDescription>
+              <li>
+                Mastered core principles of computer systems and software
+                engineering, with a strong foundation in algorithms, data
+                structures, operating systems, and embedded systems design.
+              </li>
+              <li>
+                Gained hands-on experience through practical projects,
+                developing and optimizing software applications, building
+                hardware prototypes, and integrating hardware-software
+                solutions.
+              </li>
+              <li>
+                Collaborated on team-based engineering challenges, applying
+                critical problem-solving, communication, and teamwork skills to
+                design, test, and implement innovative solutions in a variety of
+                tech domains.
+              </li>
+            </ExperienceDescription>
+          </Experience>
+        </Section>
+        <Section type="middle">
+          <Experience>
+            <ExperienceHeader
+              jobTitle="Competitive Programmer"
+              company="Student"
+              start="2016"
+              end="2018"
+            />
+            <ExperienceDescription>
+              <li>
+                Sharpened problem-solving skills through algorithmic challenges,
+                consistently tackling complex problems in data structures,
+                dynamic programming, and graph theory to improve efficiency and
+                solution speed.
+              </li>
+              <li>
+                Developed a deep understanding of computational complexity,
+                optimizing solutions by applying advanced algorithms, design
+                patterns, and programming techniques to achieve optimal time and
+                space complexity.
+              </li>
+              <li>
+                Engaged in continuous learning and self-improvement, regularly
+                solving coding challenges to stay proficient in key algorithms
+                and data structures, ensuring readiness for real-world
+                application and technical interviews.
+              </li>
+            </ExperienceDescription>
+          </Experience>
+        </Section>
+        <Section type="last">
+          <Experience>
+            <ExperienceHeader
+              jobTitle="Java Minecraft Plug-in Developer"
+              company="Freelancer"
+              start="2014"
+              end="2015"
+            />
+            <ExperienceDescription>
+              <li>
+                Managed deployment and maintenance of Minecraft servers running
+                Hunger Games and Mini Games, ensuring stable performance and
+                quick issue resolution. Regular updates kept servers compatible
+                with new versions.
+              </li>
+              <li>
+                Developed and maintained mini-game plugins, creating custom game
+                mechanics and fixing bugs based on player feedback to enhance
+                the overall experience.
+              </li>
+              <li>
+                Extended Hunger Games plugins by adding new features, updating
+                to multiple Minecraft versions, and incorporating current
+                trends, all while ensuring compatibility.
+              </li>
+              <li>
+                Collaborated with developers and the community, prioritizing
+                feature requests and continuously rolling out improvements based
+                on player feedback.
+              </li>
             </ExperienceDescription>
           </Experience>
         </Section>

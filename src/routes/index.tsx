@@ -4,6 +4,7 @@ import {
   Linkedin,
   LucideProps,
   Mail,
+  MapPin,
   Twitch,
   Twitter,
   Youtube,
@@ -58,9 +59,21 @@ function BasicInfo() {
       <h1 class="text-6xl text-primary font-bold font-titillium uppercase mt-4 mb-2">
         Lucas Duarte
       </h1>
-      <h2 class="font-regular text-4xl text-secondary mb-4">
+      <h2 class="font-regular text-4xl text-secondary mb-2">
         Full-Stack Developer
       </h2>
+      <div
+        class="flex justify-center items-center gap-2 text-secondary font-titillium font-semibold text-lg mb-2 group"
+        tabIndex={0}
+      >
+        <MapPin class="" size={16} strokeWidth={3} />
+        <span class="hidden group-hover:inline-block group-focus-within:inline-block">
+          Goiânia, State of Goiás, Brazil
+        </span>
+        <span class="inline-block group-hover:hidden group-focus-within:hidden">
+          Goiânia, Brazil
+        </span>
+      </div>
       <div class="flex w-full justify-center gap-2 my-2">
         <For each={Object.keys(links) as SocialMediaKinds[]}>
           {(data) => <SocialMediaLink kind={data} />}
@@ -95,7 +108,10 @@ function FolderTab(props: {
           class={`absolute origin-top-left h-full w-[44px]  border-t-2 ${borderColor()} bg-tertiary50 transform rotate-[37deg] z-50`}
         />
       </div>
-      <button class="z-50" onClick={() => props.setActiveTab()}>
+      <button
+        class="z-50 text-foreground font-semibold"
+        onClick={() => props.setActiveTab()}
+      >
         {text().toUpperCase()}
       </button>
     </li>
