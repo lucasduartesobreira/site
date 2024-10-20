@@ -120,6 +120,7 @@ export default function Summary() {
               <img
                 src="https://skillicons.dev/icons?i=nodejs,ts,express,fastapi,rust,nestjs,react,nextjs,solidjs,tailwind,styledcomponents,mongodb,postgresql,sqlite,dynamodb,aws,docker,terraform,githubactions,python&perline=4"
                 alt="Technologies in which I have expertise include Node.js, TypeScript, Express.js, FastAPI, Rust, Nest.js, React.js, Next.js, Solid.js, Tailwind, Styled Components, MongoDB, PostgreSQL, SQLite, DynamoDB, AWS, Docker, Terraform, GitHub Actions, Python"
+                loading="lazy"
               />
             </div>
           </div>
