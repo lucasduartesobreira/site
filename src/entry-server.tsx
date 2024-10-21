@@ -26,7 +26,7 @@ export default createHandler(() => (
           />
           <link
             rel="preload"
-            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..700;1,300..700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
             as="style"
           />
           <link
@@ -40,7 +40,7 @@ export default createHandler(() => (
           />
           <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..700;1,300..700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
           />
           <link
             rel="stylesheet"

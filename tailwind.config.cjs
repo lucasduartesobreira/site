@@ -55,8 +55,8 @@ module.exports = {
           {
             fontFamily: "Montserrat",
             fontStyle: "normal",
-            fontWeight: "300 400 500 600 700",
-            src: "url(https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..700;1,300..700&display=swap)",
+            fontWeight: "100 900",
+            src: "url(https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap)",
             fontDisplay: "swap",
           },
           {
