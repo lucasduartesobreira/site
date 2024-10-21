@@ -41,33 +41,5 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    function ({ addBase, config }) {
-      addBase({
-        "@font-face": [
-          {
-            fontFamily: "Titillium Web",
-            fontStyle: "normal",
-            fontWeight: "300 400 500 600 700",
-            src: "url(https://fonts.googleapis.com/css2?family=Titillium+Web:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap)",
-            fontDisplay: "swap",
-          },
-          {
-            fontFamily: "Montserrat",
-            fontStyle: "normal",
-            fontWeight: "100 900",
-            src: "url(https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap)",
-            fontDisplay: "swap",
-          },
-          {
-            fontFamily: "JetBrains Mono",
-            fontStyle: "normal",
-            fontWeight: "300",
-            src: "url(https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;1,300&display=swap)",
-            fontDisplay: "swap",
-          },
-        ],
-      });
-    },
-  ],
+  plugins: [],
 };
